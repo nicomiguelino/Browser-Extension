@@ -5,11 +5,12 @@ const elements = {
     workingPage: document.querySelector('#working-page'),
     proposalPage: document.querySelector('#proposal-page'),
     successPage: document.querySelector('#success-page'),
-    failurePage: document.querySelector('#failure-page'),
+    addItError: document.querySelector('#add-it-error'),
     withAuthCheckbox: document.querySelector('#with-auth-check'),
     withAuthInfo: document.querySelector('#with-auth-check-info'),
     addToForm: document.querySelector('form#add-it'),
-    addToButton: document.querySelector('form button#add-it-submit')
+    addToButton: document.querySelector('form button#add-it-submit'),
+    viewItButton: document.querySelector('button#view-it'),
 };
 
 for (let [key, value] of Object.entries(elements)) {
@@ -22,12 +23,25 @@ function showSpinner() {
     showPage(elements.workingPage);
 }
 
+function getAssetDashboardLink(assetId) {
+    // FIXME Activate the real code below after T2854 has been fixed.
+    return `https://lasershark12.screenlyapp.com/manage/assets/${assetId}`;
+    // return `https://login.screenlyapp.com/login?next=/manage/assets/${assetId}`;
+}
+
+function setAddActivityState(state) {
+    elements.addToButton.disabled = state;
+    elements.addToButton.querySelector(".spinner").hidden = !state;
+    elements.addToButton.querySelector(".label").hidden = state;
+
+    if (state)
+        elements.addItError.hidden = true;
+}
+
 function addToScreenly() {
     let includeAuth = elements.withAuthCheckbox.checked;
 
-    elements.addToButton.disabled = true;
-    elements.addToButton.querySelector(".spinner").hidden = false;
-    elements.addToButton.querySelector(".label").hidden = true;
+    setAddActivityState(true);
 
     let headers = undefined;
 
@@ -36,9 +50,10 @@ function addToScreenly() {
             'Cookie': currentProposal.cookieJar.map(cookie => cookiejs.serialize(cookie.name, cookie.value)).join("; ")
         };
     }
-
+//
     let result={id: "abc"};
-    showFailureResult(`https://${currentProposal.user.username}.screenlyapp.com/manage/assets/${result.id}`);
+    // showSuccess(getAssetDashboardLink(result.id));
+    showFailure("Didn't work.");
     return;
 
     createWebAsset(currentProposal.user, currentProposal.url, currentProposal.title, headers)
@@ -88,6 +103,8 @@ function prepareToAddToScreenly(user) {
         return;
     }
 
+    console.info(user);
+
     showSpinner();
 
     browser.tabs.executeScript({
@@ -127,16 +144,18 @@ function prepareToAddToScreenly(user) {
         });
     }).catch(error => {
         console.error("Failed to list resources (%s).", error.message);
-        showResult(undefined, "Unable to find any content to add to Screenly.");
+        showFailure("Unable to find any content to add to Screenly.");
     });
 }
 
-function showFailureResult(message) {
-    elements.failurePage.querySelector("#fail-message").textContent = message;
-    showPage(elements.failurePage);
+function showFailure(message) {
+    setAddActivityState(false);
+    elements.addItError.textContent = message;
+    elements.addItError.hidden = false;
 }
 
-function showSuccessResult(assetUrl) {
+function showSuccess(assetUrl) {
+    elements.viewItButton.dataset['href'] = assetUrl;
     showPage(elements.successPage);
 }
 
@@ -159,6 +178,13 @@ function init() {
 
         addToScreenly();
     });
+
+    elements.viewItButton.addEventListener('click', () => {
+        let url = elements.viewItButton.dataset['href'];
+        browser.tabs.create({ url: url });
+        window.close();
+    });
+
 
     getUser().then(prepareToAddToScreenly);
 }

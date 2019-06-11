@@ -5,6 +5,7 @@
     %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", :name => "viewport"}/
 
     %link{:href => "lib/vendor/bootstrap/css/bootstrap.css", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "assets/css/sweetalert-icons.css", :rel => "stylesheet", :type => "text/css"}/
     %link{:href => "assets/css/style.css", :rel => "stylesheet", :type => "text/css"}/
     %title Popup - Screenly
   %body.popup
@@ -48,11 +49,19 @@
           %button.btn.btn-primary.w-100#add-it-submit{:type => "submit"}
             %span.spinner.spinner-border.spinner-border-sm{:ariaHidden => "true", :hidden => "true"}
             %span.label Add to Screenly
+          .alert.alert-danger.mt-3.mb-0#add-it-error{:hidden => "true"}
+            Failed to add asset.
 
     .page#success-page
       .d-flex.flex-column
         %section.flex-grow-1.d-flex.justify-content-center.align-items-center
           %div
+            .success-checkmark.mt-4
+              .check-icon
+                %span.icon-line.line-tip
+                %span.icon-line.line-long
+                .icon-circle
+                .icon-fix
             %h3.text-center
               Asset saved!
             %p.text-muted
@@ -60,18 +69,6 @@
         %section
           %button.btn.btn-primary.w-100#view-it
             %span.label View Asset
-
-    .page#failure-page
-      .d-flex.flex-column
-        %section.flex-grow-1.d-flex.justify-content-center.align-items-center
-          %div
-            %h3.text-center
-              Failed to save asset.
-            %p#fail-message
-        %section
-          %button.btn.btn-primary.w-100{:disabled => "true"}
-            %span.label View Asset
-
 
     %script{:src => "lib/vendor/browser-polyfill.min.js"}
     %script{:src => "lib/vendor/cookie.js"}
