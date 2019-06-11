@@ -21,6 +21,12 @@ function showPage(pageEl) {
     showElement(pageEl);
 }
 
+function setButtonWaitState(element, state) {
+    element.disabled = state;
+    element.querySelector(".spinner").hidden = !state;
+    element.querySelector(".label").hidden = state;
+}
+
 function callApi(method, url, data=undefined, token=undefined) {
     init = {
         method: method,

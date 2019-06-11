@@ -30,9 +30,7 @@ function getAssetDashboardLink(assetId) {
 }
 
 function setAddActivityState(state) {
-    elements.addToButton.disabled = state;
-    elements.addToButton.querySelector(".spinner").hidden = !state;
-    elements.addToButton.querySelector(".label").hidden = state;
+    setButtonWaitState(elements.addToButton, state);
 
     if (state)
         elements.addItError.hidden = true;
@@ -50,25 +48,18 @@ function addToScreenly() {
             'Cookie': currentProposal.cookieJar.map(cookie => cookiejs.serialize(cookie.name, cookie.value)).join("; ")
         };
     }
-//
-    let result={id: "abc"};
-    // showSuccess(getAssetDashboardLink(result.id));
-    showFailure("Didn't work.");
-    return;
-
     createWebAsset(currentProposal.user, currentProposal.url, currentProposal.title, headers)
         .then((result) => {
-            console.info(result);
-            showResult(`https://${currentProposal.user.username}.screenlyapp.com/manage/assets/${result.id}`);
+            console.debug(result);
+            showSuccess(getAssetDashboardLink(result.id));
         })
         .catch((error) => {
             if (error.statusCode === 401) {
-                showResult(undefined, "Screenly authentication failed. Try logging out.");
+                showFailure("Screenly authentication failed. Try signing out and back in again.");
                 return;
             }
-            showResult(undefined, "Failed to add this content to your Screenly account.");
+            showFailure(undefined, "Failed to add asset.");
         });
-
 }
 
 function cancelAdd() {

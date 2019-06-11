@@ -20,12 +20,25 @@
             .form-group
               %input.form-control#password{:type => "password", :placeholder => "Password"}
             %button.btn.btn-primary.w-100#sign-in-submit{:type => "submit"}
-              Sign In
+              %span.spinner.spinner-border.spinner-border-sm{:ariaHidden => "true", :hidden => "true"}
+              %span.label Sign In
+          %section.mt-2
+            .small.text-center
+              Need an account?
+              %a#sign-up-link
+                Sign Up.
 
-      .row.page#signed-in-page
+
+      .page#signed-in-page
         .offset-4.col-4
-          Signed in as:
-          %span.username
+          %section
+            Signed in as:
+            %span.font-weight-bold.username
+          %section.mt-3
+            %button.btn.btn-primary.w-100#sign-out{:type => "submit"}
+              %span.spinner.spinner-border.spinner-border-sm{:ariaHidden => "true", :hidden => "true"}
+              %span.label Sign Out
+
 
 
     %script{:src => "lib/vendor/browser-polyfill.min.js"}
