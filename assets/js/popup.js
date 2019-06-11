@@ -58,7 +58,19 @@ function addToScreenly() {
                 showFailure("Screenly authentication failed. Try signing out and back in again.");
                 return;
             }
-            showFailure(undefined, "Failed to add asset.");
+
+            error.json()
+                .then((errorJson) => {
+                    console.error("Failed to add asset:", error);
+                    console.error("Response: ", errorJson);
+                    if (errorJson.type[0] === "AssetUnreachableError") {
+                        showFailure("Screenly couldn't reach this asset.");
+                    } else {
+                        throw "Unknown error";
+                    }
+                }).catch(() => {
+                    showFailure("Failed to add asset.");
+                });
         });
 }
 
@@ -135,7 +147,7 @@ function prepareToAddToScreenly(user) {
         });
     }).catch(error => {
         console.error("Failed to list resources (%s).", error.message);
-        showFailure("Unable to find any content to add to Screenly.");
+        window.close();
     });
 }
 
