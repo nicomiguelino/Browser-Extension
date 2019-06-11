@@ -1,15 +1,5 @@
 .DS_Store
-*.swp
-/.sass-cache*
 build/*
-.vagrant
-.ruby-version
-
-#Translations
-*.mo
-
-#Mr Developer
-.mr.developer.cfg
 
 # Emacs
 .#*
@@ -21,12 +11,6 @@ build/*
 .DS_Store
 _gulp-version
 
-# Jekyll ignore
-_site/
-.sass-cache/
-.jekyll-cache/
-.asset-cache/
-.jekyll-metadata
 /.idea/workspace.xml
 /options.html
 /popup.html
