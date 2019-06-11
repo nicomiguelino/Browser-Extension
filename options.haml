@@ -1,0 +1,33 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", :name => "viewport"}/
+
+    %link{:href => "lib/vendor/bootstrap/css/bootstrap.css", :rel => "stylesheet", :type => "text/css"}/
+    %title Options - Screenly
+  %body
+    .container
+      .row
+        .offset-4.col-4.text-center.mt-5.mb-5
+          %img{:src => "assets/images/screenly-logo-128.png", :width => "64"}
+
+      .row.page#sign-in-page
+        .offset-4.col-4
+          %form.sign-in
+            .form-group
+              %input.form-control#email{:type => "email", :placeholder => "Email address"}
+            .form-group
+              %input.form-control#password{:type => "password", :placeholder => "Password"}
+            %button.btn.btn-primary.w-100#sign-in-submit{:type => "submit"}
+              Sign In
+
+      .row.page#signed-in-page
+        .offset-4.col-4
+          Signed in as:
+          %span.username
+
+
+    %script{:src => "lib/vendor/browser-polyfill.min.js"}
+    %script{:src => "assets/js/main.js"}
+    %script{:src => "assets/js/options.js"}

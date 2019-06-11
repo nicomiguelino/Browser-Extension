@@ -1,0 +1,79 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", :name => "viewport"}/
+
+    %link{:href => "lib/vendor/bootstrap/css/bootstrap.css", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "assets/css/style.css", :rel => "stylesheet", :type => "text/css"}/
+    %title Popup - Screenly
+  %body.popup
+    .page#sign-in-page
+      .text-center.mt-5.mb-5
+        %img{:src => "assets/images/screenly-logo-128.png", :width => "64"}
+
+      #sign-in-button
+        %h1 Screenly
+        %button.btn.btn-primary#open-sign-in Sign In
+
+    .page#working-page
+      .d-flex.align-items-center.justify-content-center.h-100
+        .spinner-border
+          %span.sr-only Loading...
+
+    .page#proposal-page
+      %form#add-it
+        %section
+          %h5#title
+        %section.bg-light
+          #url.text-monospace.break-anywhere
+        %section
+          .form-check
+            %input.form-check-input#with-auth-check{:type => "checkbox"}
+            %label.form-check-label{:for => "with-auth-check"} Include Authentication Details
+          #with-auth-check-info.mt-3
+            .alert.alert-warning
+              %p.mb-0
+                Attackers with physical access to your screens may abuse saved credentials to gain <strong>your</strong> access to
+                %span.text-monospace#hostname.break-anywhere
+                  example.com
+                \.
+                %strong
+                  Use it with care.
+          .text-muted.font-italic.mb-0.mt-3
+            %p.mb-0
+              This option <strong>saves your current session credentials</strong> with the asset to your Screenly account. Sometimes, content which requires a login to view may work this way.
+
+        %section
+          %button.btn.btn-primary.w-100#add-it-submit{:type => "submit"}
+            %span.spinner.spinner-border.spinner-border-sm{:ariaHidden => "true", :hidden => "true"}
+            %span.label Add to Screenly
+
+    .page#success-page
+      .d-flex.flex-column
+        %section.flex-grow-1.d-flex.justify-content-center.align-items-center
+          %div
+            %h3.text-center
+              Asset saved!
+            %p.text-muted
+              Add the asset to a playlist to show it.
+        %section
+          %button.btn.btn-primary.w-100#view-it
+            %span.label View Asset
+
+    .page#failure-page
+      .d-flex.flex-column
+        %section.flex-grow-1.d-flex.justify-content-center.align-items-center
+          %div
+            %h3.text-center
+              Failed to save asset.
+            %p#fail-message
+        %section
+          %button.btn.btn-primary.w-100{:disabled => "true"}
+            %span.label View Asset
+
+
+    %script{:src => "lib/vendor/browser-polyfill.min.js"}
+    %script{:src => "lib/vendor/cookie.js"}
+    %script{:src => "assets/js/main.js"}
+    %script{:src => "assets/js/popup.js"}
