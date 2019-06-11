@@ -7,6 +7,8 @@ const elements = {
     noVerificationCheckbox: document.querySelector('#no-verification-check'),
     proposalPage: document.querySelector('#proposal-page'),
     signInButton: document.querySelector('button#open-sign-in'),
+    signInPage: document.querySelector('#sign-in-page'),
+    siteLink: document.querySelector('#sign-in-page a'),
     successPage: document.querySelector('#success-page'),
     verificationSection: document.querySelector('section#verification'),
     viewItButton: document.querySelector('button#view-it'),
@@ -107,6 +109,7 @@ function prepareToAddToScreenly(user) {
     const onlyPrimaryDomain = true;
 
     if (!user.username) {
+        showPage(elements.signInPage);
         return;
     }
 
@@ -167,6 +170,10 @@ function showSuccess(assetUrl) {
 }
 
 function init() {
+    elements.siteLink.addEventListener('click', () => {
+        browser.tabs.create({ url: elements.siteLink.href });
+    });
+
     elements.signInButton.addEventListener('click', () => {
         browser.runtime.openOptionsPage();
     });
@@ -191,7 +198,6 @@ function init() {
         browser.tabs.create({ url: url });
         window.close();
     });
-
 
     getUser().then(prepareToAddToScreenly);
 }

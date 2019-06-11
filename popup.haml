@@ -10,12 +10,15 @@
     %title Popup - Screenly
   %body.popup
     .page#sign-in-page
-      .text-center.mt-5.mb-5
-        %img{:src => "assets/images/screenly-logo-128.png", :width => "64"}
-
-      #sign-in-button
-        %h1 Screenly
-        %button.btn.btn-primary#open-sign-in Sign In
+      .d-flex.flex-column
+        %section.flex-grow-1.d-flex.justify-content-center.align-items-center
+          %div.text-center
+            %img{:src => "assets/images/screenly-logo-128.png", :width => "64"}
+            %h1.mt-2.mb-1 Screenly
+            %a{:href => "https://screenly.io"}
+              screenly.io
+        %section
+          %button.btn.btn-primary.w-100#open-sign-in Sign In
 
     .page#working-page
       .d-flex.align-items-center.justify-content-center.h-100
