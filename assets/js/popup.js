@@ -1,16 +1,18 @@
 'use strict';
 
 const elements = {
-    signInButton: document.querySelector('button#open-sign-in'),
-    workingPage: document.querySelector('#working-page'),
-    proposalPage: document.querySelector('#proposal-page'),
-    successPage: document.querySelector('#success-page'),
     addItError: document.querySelector('#add-it-error'),
+    addToButton: document.querySelector('form button#add-it-submit'),
+    addToForm: document.querySelector('form#add-it'),
+    noVerificationCheckbox: document.querySelector('#no-verification-check'),
+    proposalPage: document.querySelector('#proposal-page'),
+    signInButton: document.querySelector('button#open-sign-in'),
+    successPage: document.querySelector('#success-page'),
+    verificationSection: document.querySelector('section#verification'),
+    viewItButton: document.querySelector('button#view-it'),
     withAuthCheckbox: document.querySelector('#with-auth-check'),
     withAuthInfo: document.querySelector('#with-auth-check-info'),
-    addToForm: document.querySelector('form#add-it'),
-    addToButton: document.querySelector('form button#add-it-submit'),
-    viewItButton: document.querySelector('button#view-it'),
+    workingPage: document.querySelector('#working-page'),
 };
 
 for (let [key, value] of Object.entries(elements)) {
@@ -37,7 +39,8 @@ function setAddActivityState(state) {
 }
 
 function addToScreenly() {
-    let includeAuth = elements.withAuthCheckbox.checked;
+    const includeAuth = elements.withAuthCheckbox.checked;
+    const disableVerification = elements.noVerificationCheckbox.checked;
 
     setAddActivityState(true);
 
@@ -48,7 +51,7 @@ function addToScreenly() {
             'Cookie': currentProposal.cookieJar.map(cookie => cookiejs.serialize(cookie.name, cookie.value)).join("; ")
         };
     }
-    createWebAsset(currentProposal.user, currentProposal.url, currentProposal.title, headers)
+    createWebAsset(currentProposal.user, currentProposal.url, currentProposal.title, headers, disableVerification)
         .then((result) => {
             console.debug(result);
             showSuccess(getAssetDashboardLink(result.id));
@@ -64,7 +67,8 @@ function addToScreenly() {
                     console.error("Failed to add asset:", error);
                     console.error("Response: ", errorJson);
                     if (errorJson.type[0] === "AssetUnreachableError") {
-                        showFailure("Screenly couldn't reach this asset.");
+                        elements.verificationSection.hidden = false;
+                        showFailure("Screenly couldn't reach this asset. Use the Bypass Verification option to add this asset anyhow.");
                     } else {
                         throw "Unknown error";
                     }

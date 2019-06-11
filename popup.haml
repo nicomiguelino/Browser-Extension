@@ -32,7 +32,7 @@
           .form-check
             %input.form-check-input#with-auth-check{:type => "checkbox"}
             %label.form-check-label{:for => "with-auth-check"} Include Authentication Details
-          #with-auth-check-info.mt-3
+          #with-auth-check-info.mt-2
             .alert.alert-warning
               %p.mb-0
                 Attackers with physical access to your screens may abuse saved credentials to gain <strong>your</strong> access to
@@ -41,9 +41,14 @@
                 \.
                 %strong
                   Use it with care.
-          .text-muted.font-italic.mb-0.mt-3
+          .text-muted.font-italic.mb-0.mt-2
             %p.mb-0
               This option <strong>saves your current session credentials</strong> with the asset to your Screenly account. Sometimes, content which requires a login to view may work this way.
+
+        %section#verification{:hidden => true}
+          .form-check
+            %input.form-check-input#no-verification-check{:type => "checkbox"}
+            %label.form-check-label{:for => "no-verification-check"} Bypass Verification
 
         %section
           %button.btn.btn-primary.w-100#add-it-submit{:type => "submit"}

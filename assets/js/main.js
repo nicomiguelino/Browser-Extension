@@ -69,14 +69,15 @@ function getUser() {
     return browser.storage.sync.get(['username', 'token']);
 }
 
-function createWebAsset(user, url, title, headers) {
+function createWebAsset(user, url, title, headers, disableVerification) {
     return callApi(
         "POST",
         "https://api.screenlyapp.com/api/v3/assets/",
         {
             "source_url": url,
             "title": title,
-            "headers": headers
+            "headers": headers,
+            // "disable_verification": disableVerification,
         },
         user.token
     );
