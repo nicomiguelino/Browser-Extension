@@ -27,12 +27,6 @@ function showSpinner() {
     showPage(elements.workingPage);
 }
 
-function getAssetDashboardLink(assetId) {
-    // FIXME Activate the real code below after T2854 has been fixed.
-    return `https://lasershark12.screenlyapp.com/manage/assets/${assetId}`;
-    // return `https://login.screenlyapp.com/login?next=/manage/assets/${assetId}`;
-}
-
 function setAddActivityState(state) {
     setButtonWaitState(elements.addToButton, state);
 

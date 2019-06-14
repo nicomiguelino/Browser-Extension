@@ -77,8 +77,12 @@ function createWebAsset(user, url, title, headers, disableVerification) {
             "source_url": url,
             "title": title,
             "headers": headers,
-            // "disable_verification": disableVerification,
+            "disable_verification": disableVerification,
         },
         user.token
     );
+}
+
+function getAssetDashboardLink(assetId) {
+    return `https://login.screenlyapp.com/login?next=/manage/assets/${assetId}`;
 }
