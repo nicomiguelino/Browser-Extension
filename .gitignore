@@ -1,0 +1,16 @@
+.DS_Store
+build/*
+
+# Emacs
+.#*
+
+# VIM
+*.swp
+*.swo
+
+.DS_Store
+_gulp-version
+
+/.idea/workspace.xml
+/options.html
+/popup.html
