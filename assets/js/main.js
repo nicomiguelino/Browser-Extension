@@ -35,7 +35,7 @@ function callApi(method, url, data=undefined, token=undefined) {
         }
     };
 
-    if (data !== undefined) {
+    if (data !== undefined && data !== null) {
         init.body = JSON.stringify(data)
     }
 
