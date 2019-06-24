@@ -2,9 +2,9 @@ Build
 -----
 
 1. Compile the haml.
-2. `zip -r screenly-chrome-extension-0.1.0.zip *.html assets lib *.json *.js`
+1. Zip it up:
 
-(TODO: Exclude jasmine from the build.)
+        zip -r screenly-chrome-extension-0.2.zip -x lib/vendor/jasmine *.html assets lib *.json *.js zip -r screenly-chrome-extension-0.2.zip *.html assets lib *.json *.js -x "lib/vendor/jasmine*"
 
 Unit testing
 ------------
