@@ -50,8 +50,15 @@ function callApi(method, url, data=undefined, token=undefined) {
             }
 
             return response.json();
-        }
-    )
+        }).catch((error) => {
+            // Do some basic logging but then just rethrow the error.
+
+            console.error("API request %s %s failed: %s", method, url, error);
+            if (error.status)
+                console.info("Response: ", error);
+
+            throw error;
+        });
 }
 
 function fetchToken(email, password) {
