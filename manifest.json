@@ -1,16 +1,12 @@
 {
   "manifest_version": 2,
   "name": "Save to Screenly",
-  "version": "0.1",
-  "description": "Display content you find on the web on your Screenly digital signage player.",
+  "version": "0.2.0",
+  "description": "Save content you find on the web to your Screenly digital signage player.",
   "icons": {
     "16": "assets/images/screenly-logo-16.png",
     "48": "assets/images/screenly-logo-48.png",
     "128": "assets/images/screenly-logo-128.png"
-  },
-  "background": {
-    "scripts": ["lib/vendor/browser-polyfill.min.js", "background.js"],
-    "persistent": false
   },
   "permissions": [
       "storage",

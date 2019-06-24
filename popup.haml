@@ -20,12 +20,12 @@
         %section
           %button.btn.btn-primary.w-100#open-sign-in Sign In
 
-    .page#working-page
+    .page#working-page{:hidden => true}
       .d-flex.align-items-center.justify-content-center.h-100
         .spinner-border
           %span.sr-only Loading...
 
-    .page#proposal-page
+    .page#proposal-page{:hidden => true}
       %form#add-it
         %section
           %h5#title
@@ -56,11 +56,12 @@
         %section
           %button.btn.btn-primary.w-100#add-it-submit{:type => "submit"}
             %span.spinner.spinner-border.spinner-border-sm{:ariaHidden => "true", :hidden => "true"}
-            %span.label Add to Screenly
+            %span.label.add Add to Screenly
+            %span.label.update{:hidden => "true"} Update Asset
           .alert.alert-danger.mt-3.mb-0#add-it-error{:hidden => "true"}
             Failed to add asset.
 
-    .page#success-page
+    .page#success-page{:hidden => true}
       .d-flex.flex-column
         %section.flex-grow-1.d-flex.justify-content-center.align-items-center
           %div
@@ -80,5 +81,7 @@
 
     %script{:src => "lib/vendor/browser-polyfill.min.js"}
     %script{:src => "lib/vendor/cookie.js"}
+    %script{:src => "lib/vendor/normalize-url.js"}
     %script{:src => "assets/js/main.js"}
     %script{:src => "assets/js/popup.js"}
+    %script{:src => "assets/js/boot.js"}

@@ -2,6 +2,7 @@
 
 const elements = {
     addItError: document.querySelector('#add-it-error'),
+    addLabel: document.querySelector('span.label.add'),
     addToButton: document.querySelector('form button#add-it-submit'),
     addToForm: document.querySelector('form#add-it'),
     noVerificationCheckbox: document.querySelector('#no-verification-check'),
@@ -10,16 +11,13 @@ const elements = {
     signInPage: document.querySelector('#sign-in-page'),
     siteLink: document.querySelector('#sign-in-page a'),
     successPage: document.querySelector('#success-page'),
+    updateLabel: document.querySelector('span.label.update'),
     verificationSection: document.querySelector('section#verification'),
     viewItButton: document.querySelector('button#view-it'),
     withAuthCheckbox: document.querySelector('#with-auth-check'),
     withAuthInfo: document.querySelector('#with-auth-check-info'),
     workingPage: document.querySelector('#working-page'),
 };
-
-for (let [key, value] of Object.entries(elements)) {
-    assert(value, `${key} not found`);
-}
 
 let currentProposal;
 
@@ -47,9 +45,20 @@ function addToScreenly() {
             'Cookie': currentProposal.cookieJar.map(cookie => cookiejs.serialize(cookie.name, cookie.value)).join("; ")
         };
     }
-    createWebAsset(currentProposal.user, currentProposal.url, currentProposal.title, headers, disableVerification)
+
+    const currentAssetId = currentProposal.assetId;
+    let action;
+
+    if (!currentAssetId) {
+        action = createWebAsset(currentProposal.user, currentProposal.url, currentProposal.title, headers, disableVerification);
+    } else {
+        action = updateWebAsset(currentAssetId, currentProposal.user, currentProposal.url, currentProposal.title, headers, disableVerification);
+    }
+
+    action
         .then((result) => {
             console.debug(result);
+            State.setAssetId(currentProposal.url, result.id);
             showSuccess(getAssetDashboardLink(result.id));
         })
         .catch((error) => {
@@ -60,7 +69,7 @@ function addToScreenly() {
 
             error.json()
                 .then((errorJson) => {
-                    console.error("Failed to add asset:", error);
+                    console.error("Failed to add/update asset:", error);
                     console.error("Response: ", errorJson);
                     if (errorJson.type[0] === "AssetUnreachableError") {
                         elements.verificationSection.hidden = false;
@@ -69,7 +78,7 @@ function addToScreenly() {
                         throw "Unknown error";
                     }
                 }).catch(() => {
-                    showFailure("Failed to add asset.");
+                    showFailure(currentAssetId ? "Failed to update asset." : "Failed to add asset.");
                 });
         });
 }
@@ -79,23 +88,62 @@ function cancelAdd() {
     window.close();
 }
 
-function updateProposal() {
-    elements.proposalPage.querySelector("#title").textContent = currentProposal.title;
-    elements.proposalPage.querySelector("#url").textContent = currentProposal.url;
-    elements.proposalPage.querySelector("#hostname").textContent = new URL(currentProposal.url).hostname;
+function updateProposal(newProposal) {
+    currentProposal = newProposal;
+    const url = currentProposal.url;
+
+    return State.getAssetId(url)
+        .then((assetId) => {
+            if (assetId)
+                // Does the asset still exist?
+                return getWebAsset(assetId, newProposal.user)
+                    .then((response) => {
+                        // Yes it does. Proceed with the update path.
+                        return assetId;
+                    })
+                    .catch((error) => {
+                        if (error.status === 404) {
+                            // It's gone. Proceed like if we never had it.
+                            State.setAssetId(url, null);
+                            return undefined;
+                        }
+
+                        throw error;
+                    });
+        })
+        .then((assetId) => {
+            currentProposal.assetId = assetId;
+
+            elements.proposalPage.querySelector("#title").textContent = currentProposal.title;
+            elements.proposalPage.querySelector("#url").textContent = currentProposal.url;
+            elements.proposalPage.querySelector("#hostname").textContent = new URL(url).hostname;
+
+            console.info(`URL ${url} associated with asset ID ${assetId}`);
+            if (assetId) {
+                hideElement(elements.addLabel);
+                showElement(elements.updateLabel);
+            } else {
+                hideElement(elements.updateLabel);
+                showElement(elements.addLabel);
+            }
+        })
+        .catch((error) => {
+            // Unknown error.
+            showFailure("Failed to check asset.");
+            throw error;
+        });
 }
 
 function proposeToAddToScreenly(user, url, title, cookieJar) {
-    currentProposal = {
+    updateProposal({
         user: user,
         title: title,
-        url: url,
+        url: State.normalizeUrl(url),
         cookieJar: cookieJar
-    };
-
-    updateProposal();
-
-    showPage(elements.proposalPage);
+    })
+        .then(() => {
+            showPage(elements.proposalPage);
+        });
 }
 
 function prepareToAddToScreenly(user) {
@@ -164,6 +212,10 @@ function showSuccess(assetUrl) {
 }
 
 function init() {
+    for (let [key, value] of Object.entries(elements)) {
+        assert(value, `${key} not found`);
+    }
+
     elements.siteLink.addEventListener('click', () => {
         browser.tabs.create({ url: elements.siteLink.href });
     });
@@ -195,7 +247,3 @@ function init() {
 
     getUser().then(prepareToAddToScreenly);
 }
-
-init();
-
-

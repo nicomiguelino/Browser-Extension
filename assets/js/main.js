@@ -35,7 +35,7 @@ function callApi(method, url, data=undefined, token=undefined) {
         }
     };
 
-    if (data !== undefined) {
+    if (data !== undefined && data !== null) {
         init.body = JSON.stringify(data)
     }
 
@@ -50,8 +50,15 @@ function callApi(method, url, data=undefined, token=undefined) {
             }
 
             return response.json();
-        }
-    )
+        }).catch((error) => {
+            // Do some basic logging but then just rethrow the error.
+
+            console.error("API request %s %s failed: %s", method, url, error);
+            if (error.status)
+                console.info("Response: ", error);
+
+            throw error;
+        });
 }
 
 function fetchToken(email, password) {
@@ -83,6 +90,94 @@ function createWebAsset(user, url, title, headers, disableVerification) {
     );
 }
 
+function updateWebAsset(assetId, user, url, title, headers, disableVerification) {
+    return callApi(
+        "PATCH",
+        `https://api.screenlyapp.com/api/v3/assets/${encodeURIComponent(assetId)}/`,
+        {
+            "title": title,
+            "headers": headers,
+        },
+        user.token
+    );
+}
+
+function getWebAsset(assetId, user) {
+    return callApi(
+        "GET",
+        `https://api.screenlyapp.com/api/v3/assets/${encodeURIComponent(assetId)}/`,
+        null,
+        user.token
+    )
+}
+
 function getAssetDashboardLink(assetId) {
     return `https://login.screenlyapp.com/login?next=/manage/assets/${assetId}`;
+}
+
+
+class State {
+    constructor() {
+    }
+
+    // Make a new URL equivalent to the given URL but in a normalized format.
+    static normalizeUrl(url) {
+        return window.normalizeUrl(url, {
+            removeTrailingSlash: false,
+            sortQueryParameters: false,
+            stripWWW: false,
+        });
+    }
+
+    // Simplify a URL heavily, even if it slightly changes its meaning.
+    static simplifyUrl(url) {
+        return window.normalizeUrl(url, {
+            removeTrailingSlash: true,
+            sortQueryParameters: true,
+            stripHash: true,
+            stripProtocol: true,
+            stripWWW: true,
+        })
+    }
+
+    static setAssetId(url, assetId) {
+        url = State.simplifyUrl(url);
+        console.debug(`Saving ${url} -> ${assetId}`);
+
+        return browser.storage.sync.get(['state'])
+            .then((state) => {
+                state = state || {};
+
+                if (assetId)
+                    state[url] = assetId;
+                else
+                    delete state[url];
+
+                console.debug("State: ", state);
+                return browser.storage.sync.set({'state': state})
+                    .catch((error) => {
+                        console.error("Unable to save state %s -> %s", url, assetId);
+                        // Assume it's because storage is full. Try to set just one key.
+                        // TODO Use LRU to ensure the dictionary doesn't ever grow larger than the
+                        // sync storage limit.
+                        return browser.stoage.sync.remove('state').then(() => {
+                            if (assetId)
+                                return browser.storage.sync.set({'state': {url: assetId}});
+                            else
+                                return browser.storage.sync.set({'state': {}});
+                        });
+                    });
+            });
+    }
+
+    static getAssetId(url) {
+        url = State.simplifyUrl(url);
+        console.debug(`Reading back ${url}`);
+
+        return browser.storage.sync.get(['state'])
+            .then(({state}) => {
+                state = state || {};
+                return state[url];
+            });
+    }
 }

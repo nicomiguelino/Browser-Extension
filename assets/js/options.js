@@ -9,10 +9,6 @@ const elements = {
     signUpLink: document.querySelector('a#sign-up-link'),
 };
 
-for (let [key, value] of Object.entries(elements)) {
-    assert(value, `${key} not found`);
-}
-
 function reload() {
     location.reload();
 }
@@ -45,6 +41,10 @@ function signOut() {
 }
 
 function init() {
+    for (let [key, value] of Object.entries(elements)) {
+        assert(value, `${key} not found`);
+    }
+
     elements.signInForm.addEventListener('submit', submitSignIn);
     elements.signOutButton.addEventListener('click', signOut);
     elements.signUpLink.href = `https://login.screenlyapp.com/sign-up?next=${window.location.href}`
@@ -59,5 +59,3 @@ function init() {
         }
     });
 }
-
-init();
