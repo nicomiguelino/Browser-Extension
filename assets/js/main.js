@@ -90,6 +90,27 @@ function createWebAsset(user, url, title, headers, disableVerification) {
     );
 }
 
+function updateWebAsset(assetId, user, url, title, headers, disableVerification) {
+    return callApi(
+        "PATCH",
+        `https://api.screenlyapp.com/api/v3/assets/${encodeURIComponent(assetId)}/`,
+        {
+            "title": title,
+            "headers": headers,
+        },
+        user.token
+    );
+}
+
+function getWebAsset(assetId, user) {
+    return callApi(
+        "GET",
+        `https://api.screenlyapp.com/api/v3/assets/${encodeURIComponent(assetId)}/`,
+        null,
+        user.token
+    )
+}
+
 function getAssetDashboardLink(assetId) {
     return `https://login.screenlyapp.com/login?next=/manage/assets/${assetId}`;
 }
