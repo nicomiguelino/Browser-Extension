@@ -17,10 +17,6 @@ const elements = {
     workingPage: document.querySelector('#working-page'),
 };
 
-for (let [key, value] of Object.entries(elements)) {
-    assert(value, `${key} not found`);
-}
-
 let currentProposal;
 
 function showSpinner() {
@@ -164,6 +160,10 @@ function showSuccess(assetUrl) {
 }
 
 function init() {
+    for (let [key, value] of Object.entries(elements)) {
+        assert(value, `${key} not found`);
+    }
+
     elements.siteLink.addEventListener('click', () => {
         browser.tabs.create({ url: elements.siteLink.href });
     });
@@ -195,7 +195,3 @@ function init() {
 
     getUser().then(prepareToAddToScreenly);
 }
-
-init();
-
-
