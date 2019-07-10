@@ -1,5 +1,13 @@
 'use strict';
 
+import {
+    assert,
+    fetchToken,
+    getUser,
+    setButtonWaitState,
+    showPage
+} from "./main.mjs";
+
 const elements = {
     signedInPage: document.querySelector('#signed-in-page'),
     signInForm: document.querySelector('form.sign-in'),
@@ -40,7 +48,7 @@ function signOut() {
     browser.storage.sync.clear().then(reload);
 }
 
-function init() {
+export function initOptions() {
     for (let [key, value] of Object.entries(elements)) {
         assert(value, `${key} not found`);
     }

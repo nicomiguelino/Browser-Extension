@@ -1,5 +1,18 @@
 'use strict';
 
+import {
+    assert,
+    createWebAsset,
+    getAssetDashboardLink, getUser,
+    getWebAsset,
+    hideElement,
+    setButtonWaitState,
+    showElement,
+    showPage,
+    State,
+    updateWebAsset
+} from "./main.mjs";
+
 const elements = {
     addItError: document.querySelector('#add-it-error'),
     addLabel: document.querySelector('span.label.add'),
@@ -81,11 +94,6 @@ function addToScreenly() {
                     showFailure(currentAssetId ? "Failed to update asset." : "Failed to add asset.");
                 });
         });
-}
-
-function cancelAdd() {
-    currentProposal = null;
-    window.close();
 }
 
 function updateProposal(newProposal) {
@@ -211,7 +219,7 @@ function showSuccess(assetUrl) {
     showPage(elements.successPage);
 }
 
-function init() {
+export function initPopup() {
     for (let [key, value] of Object.entries(elements)) {
         assert(value, `${key} not found`);
     }
