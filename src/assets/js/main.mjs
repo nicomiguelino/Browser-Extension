@@ -1,19 +1,19 @@
 'use strict';
 
-function assert(condition, msg=undefined) {
+export function assert(condition, msg=undefined) {
     if (!condition)
         throw msg ? msg : "Assertion error";
 }
 
-function showElement(element) {
+export function showElement(element) {
     element.hidden = false;
 }
 
-function hideElement(element) {
+export function hideElement(element) {
     element.hidden = true;
 }
 
-function showPage(pageEl) {
+export function showPage(pageEl) {
     Array.from(document.querySelectorAll(".page"))
         .filter(value => value !== pageEl)
         .forEach(hideElement);
@@ -21,14 +21,14 @@ function showPage(pageEl) {
     showElement(pageEl);
 }
 
-function setButtonWaitState(element, state) {
+export function setButtonWaitState(element, state) {
     element.disabled = state;
     element.querySelector(".spinner").hidden = !state;
     element.querySelector(".label").hidden = state;
 }
 
 function callApi(method, url, data=undefined, token=undefined) {
-    init = {
+    let init = {
         method: method,
         headers: {
             'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ function callApi(method, url, data=undefined, token=undefined) {
         });
 }
 
-function fetchToken(email, password) {
+export function fetchToken(email, password) {
     console.info(`Getting token for ${email}...`);
     return callApi(
         "POST",
@@ -72,11 +72,11 @@ function fetchToken(email, password) {
         });
 }
 
-function getUser() {
+export function getUser() {
     return browser.storage.sync.get(['username', 'token']);
 }
 
-function createWebAsset(user, url, title, headers, disableVerification) {
+export function createWebAsset(user, url, title, headers, disableVerification) {
     return callApi(
         "POST",
         "https://api.screenlyapp.com/api/v3/assets/",
@@ -90,7 +90,7 @@ function createWebAsset(user, url, title, headers, disableVerification) {
     );
 }
 
-function updateWebAsset(assetId, user, url, title, headers, disableVerification) {
+export function updateWebAsset(assetId, user, url, title, headers, disableVerification) {
     return callApi(
         "PATCH",
         `https://api.screenlyapp.com/api/v3/assets/${encodeURIComponent(assetId)}/`,
@@ -102,7 +102,7 @@ function updateWebAsset(assetId, user, url, title, headers, disableVerification)
     );
 }
 
-function getWebAsset(assetId, user) {
+export function getWebAsset(assetId, user) {
     return callApi(
         "GET",
         `https://api.screenlyapp.com/api/v3/assets/${encodeURIComponent(assetId)}/`,
@@ -111,12 +111,12 @@ function getWebAsset(assetId, user) {
     )
 }
 
-function getAssetDashboardLink(assetId) {
+export function getAssetDashboardLink(assetId) {
     return `https://login.screenlyapp.com/login?next=/manage/assets/${assetId}`;
 }
 
 
-class State {
+export class State {
     constructor() {
     }
 

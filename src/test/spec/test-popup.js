@@ -1,5 +1,7 @@
 'use strict';
 
+import {State} from "../../assets/js/main.mjs";
+
 describe("State.normalizeUrl", function() {
     const behaviours = [
         ['https://example.com', 'https://example.com'],
