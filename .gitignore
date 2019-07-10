@@ -14,3 +14,4 @@ _gulp-version
 /.idea/workspace.xml
 /options.html
 /popup.html
+/dist
