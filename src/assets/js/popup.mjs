@@ -1,5 +1,7 @@
 'use strict';
 
+import '../css/sweetalert-icons.css';
+
 import {
     assert,
     createWebAsset,
