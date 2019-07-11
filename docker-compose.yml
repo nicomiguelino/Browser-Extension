@@ -2,7 +2,7 @@ version: '3'
 services:
   webpack:
     build: .
-    command: npx webpack --watch
+    command: npx webpack --watch --config webpack.dev.js
     image: sce_webpack:latest
     volumes:
       - .:/app:delegated
