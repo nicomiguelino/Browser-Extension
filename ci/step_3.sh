@@ -12,4 +12,4 @@ docker run \
     --rm \
     -v $(pwd)/artifacts:/app/artifacts:delegated \
     sce_webpack:latest \
-    /bin/bash -c "cd dist ; zip -r ../artifacts/screenly-chrome-extension-$GIT_HASH.zip *"
+    /bin/bash -c "npm build && cd dist && zip -r ../artifacts/screenly-chrome-extension-$GIT_HASH.zip *"
