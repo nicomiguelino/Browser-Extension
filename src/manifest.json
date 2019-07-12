@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Save to Screenly",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Save content you find on the web to your Screenly digital signage player.",
   "icons": {
     "16": "assets/images/screenly-logo-16.png",

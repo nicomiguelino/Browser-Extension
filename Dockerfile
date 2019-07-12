@@ -44,6 +44,7 @@ RUN apt-get update --fix-missing \
         libxtst6 \
         lsb-release \
         wget \
+        zip \
         xdg-utils \
     && rm -rf /var/lib/apt/lists/*
 
