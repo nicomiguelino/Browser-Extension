@@ -26,6 +26,16 @@ docker run \
 Unit testing
 ------------
 
+```
+docker-compose build
+docker run \
+    --rm -ti \
+    -v $(pwd):/app:delegated \
+    -v /app/node_modules \
+    sce_webpack:latest npx webpack --config webpack.dev.js && npm test
+
+```
+
 1. Build the extension in dev mode.
 2. Load the extension as an unpacked extension from the `dist` folder.
 3. Find the extension URL and then open `chrome-extension://extension-id/test/tests.html` in Chrome.
