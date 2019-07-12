@@ -5,4 +5,4 @@
 docker run \
     --rm \
     sce_webpack:latest \
-    npx webpack --config webpack.dev.js && npm teamcity
+    /bin/bash -c "npx webpack --config webpack.dev.js && npm teamcity"

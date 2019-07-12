@@ -9,5 +9,6 @@ mkdir dist
 docker run \
     --rm \
     -v $(pwd)/dist:/app/dist:delegated \
-    sce_webpack:latest npm build
+    sce_webpack:latest \
+    npm build
 
