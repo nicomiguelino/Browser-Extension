@@ -5,8 +5,6 @@
 set -euox pipefail
 IFS=$'\n\t'
 
-GIT_HASH=$(git rev-parse --short=8 head)
-
 # Save the build as a teamcity artifact.
 
 mkdir artifacts
@@ -15,4 +13,4 @@ docker run \
     --rm \
     -v $(pwd)/artifacts:/app/artifacts:delegated \
     sce_webpack:latest \
-    /bin/bash -c "npm run build && cd dist && zip -r ../artifacts/screenly-chrome-extension-$GIT_HASH.zip *"
+    /bin/bash -c "npm run build && cd dist && zip -r ../artifacts/screenly-chrome-extension.zip *"
