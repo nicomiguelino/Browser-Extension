@@ -1,6 +1,9 @@
-#!/bin/bash -ex
+#!/usr/bin/env bash
 # vim: tabstop=4 shiftwidth=4 softtabstop=4
 # -*- sh-basic-offset: 4 -*-
+
+set -euox pipefail
+IFS=$'\n\t'
 
 GIT_HASH=$(git rev-parse --short=8 head)
 
