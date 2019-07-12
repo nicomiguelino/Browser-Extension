@@ -8,6 +8,10 @@ module.exports = merge(common, {
     devtool: 'source-map',
     mode: 'development',
 
+    entry: {
+        "tests": './src/test/spec/test-popup.js',
+    },
+
     plugins: [
         // It would be nicer to just import jasmine and let webpack handle the rest but
         // based on this SO question, Jasmine seems incompatible with that approach.

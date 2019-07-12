@@ -7,7 +7,6 @@ module.exports = {
     entry: {
         "popup": './src/assets/js/boot-popup.mjs',
         "options": './src/assets/js/boot-options.mjs',
-        "tests": './src/test/spec/test-popup.js',
     },
 
     module: {
