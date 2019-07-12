@@ -4,7 +4,5 @@
 
 docker run \
     --rm \
-    -v $(pwd):/app:delegated \
-    -v /app/node_modules \
-    sce_webpack:latest npx webpack --config webpack.dev.js && npm teamcity
-
+    sce_webpack:latest \
+    npx webpack --config webpack.dev.js && npm teamcity
