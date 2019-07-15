@@ -88,12 +88,12 @@ function addToScreenly() {
                     console.error("Response: ", errorJson);
                     if (errorJson.type[0] === "AssetUnreachableError") {
                         elements.verificationSection.hidden = false;
-                        showFailure("Screenly couldn't reach this asset. Use the Bypass Verification option to add this asset anyhow.");
+                        showFailure("Screenly couldn’t reach this web page. To save it anyhow, use the Bypass Verification option. ");
                     } else {
                         throw "Unknown error";
                     }
                 }).catch(() => {
-                    showFailure(currentAssetId ? "Failed to update asset." : "Failed to add asset.");
+                    showFailure(currentAssetId ? "Failed to update asset." : "Failed to save web page.");
                 });
         });
 }
