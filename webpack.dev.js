@@ -9,7 +9,7 @@ module.exports = merge(common, {
     mode: 'development',
 
     entry: {
-        "tests": './src/test/spec/test-popup.js',
+        "tests": './src/test/spec/all.js',
     },
 
     plugins: [
