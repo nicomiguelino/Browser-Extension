@@ -3,7 +3,10 @@
     "linters": {
         "JavaScript ": {
             "type": "eslint",
-            "include": "(src/.*\\.js$)",
+            "include": [
+                "(src/.*\\.js$)",
+                "(src/.*\\.mjs$)"
+            ],
             "bin": "./bin/host_eslint.sh",
             "eslint.config": ".eslintrc.js",
             "eslint.env": "browser"
