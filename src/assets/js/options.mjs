@@ -1,5 +1,7 @@
 'use strict';
 
+/* global browser */
+
 import {
     assert,
     fetchToken,
@@ -29,8 +31,6 @@ function submitSignIn(e) {
     const password = document.querySelector('form.sign-in #password').value;
     fetchToken(email, password).then(response => {
         console.log(response);
-        const username = response.username;
-        const token = response.token;
 
         browser.storage.sync.set({
             username: response.username,

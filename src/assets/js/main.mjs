@@ -1,8 +1,9 @@
 'use strict';
 
+/* global browser */
+
 import '../../lib/vendor/bootstrap/css/bootstrap.css';
 import '../css/style.css';
-import "../../lib/vendor/cookie.js";
 import "../../lib/vendor/normalize-url.js";
 
 export function assert(condition, msg=undefined) {
@@ -95,7 +96,7 @@ export function createWebAsset(user, url, title, headers, disableVerification) {
     );
 }
 
-export function updateWebAsset(assetId, user, url, title, headers, disableVerification) {
+export function updateWebAsset(assetId, user, url, title, headers, disableVerification) { // eslint-disable-line no-unused-vars
     return callApi(
         "PATCH",
         `https://api.screenlyapp.com/api/v3/assets/${encodeURIComponent(assetId)}/`,
@@ -160,7 +161,7 @@ export class State {
 
                 console.debug("State: ", state);
                 return browser.storage.sync.set({'state': state})
-                    .catch((error) => {
+                    .catch(() => {
                         console.error("Unable to save state %s -> %s", url, assetId);
                         // Assume it's because storage is full. Try to set just one key.
                         // TODO Use LRU to ensure the dictionary doesn't ever grow larger than the

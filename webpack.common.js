@@ -61,6 +61,10 @@ module.exports = {
         })
     ],
 
+    watchOptions: {
+        ignored: /node_modules/,
+    },
+
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')

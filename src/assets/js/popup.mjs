@@ -1,5 +1,7 @@
 'use strict';
 
+/* global browser */
+
 import '../css/sweetalert-icons.css';
 
 import {
@@ -14,6 +16,8 @@ import {
     State,
     updateWebAsset
 } from "./main.mjs";
+
+import * as cookiejs from "../../lib/vendor/cookie.mjs";
 
 const elements = {
     addItError: document.querySelector('#add-it-error'),
@@ -88,7 +92,7 @@ function addToScreenly() {
                     console.error("Response: ", errorJson);
                     if (errorJson.type[0] === "AssetUnreachableError") {
                         elements.verificationSection.hidden = false;
-                        showFailure("Screenly couldn’t reach this web page. To save it anyhow, use the Bypass Verification option. ");
+                        showFailure("Screenly couldn't reach this web page. To save it anyhow, use the Bypass Verification option. ");
                     } else {
                         throw "Unknown error";
                     }
@@ -107,7 +111,7 @@ function updateProposal(newProposal) {
             if (assetId)
                 // Does the asset still exist?
                 return getWebAsset(assetId, newProposal.user)
-                    .then((response) => {
+                    .then(() => {
                         // Yes it does. Proceed with the update path.
                         return assetId;
                     })
@@ -195,6 +199,7 @@ function prepareToAddToScreenly(user) {
             );
 
             if (onlyPrimaryDomain) {
+                // noinspection JSUnresolvedVariable
                 cookieJar = cookieJar.filter(cookie =>
                     cookie.domain === originDomain || (!cookie.hostOnly && originDomain.endsWith(cookie.domain))
                 )
