@@ -14,12 +14,14 @@
         .offset-4.col-4
           %form.sign-in
             .form-group
-              %input.form-control#email{:type => "email", :placeholder => "Email address"}
+              %input.form-control#email{:type => "email", :placeholder => "Email address", :required => "true"}
             .form-group
-              %input.form-control#password{:type => "password", :placeholder => "Password"}
+              %input.form-control#password{:type => "password", :placeholder => "Password", :required => "true"}
             %button.btn.btn-primary.w-100#sign-in-submit{:type => "submit"}
               %span.spinner.spinner-border.spinner-border-sm{:ariaHidden => "true", :hidden => "true"}
               %span.label Sign In
+            .alert.alert-danger.mt-3.mb-0#sign-in-error{:hidden => "true"}
+              Unable to sign in. Check your credentials and internet connectivity, then try again.
           %section.mt-2
             .small.text-center
               Need an account?
