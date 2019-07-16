@@ -1,9 +1,11 @@
 module.exports = {
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jasmine": true
     },
-    "extends": "eslint:recommended",
+    "plugins": ["jasmine"],
+    "extends": ["eslint:recommended", "plugin:jasmine/recommended"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
