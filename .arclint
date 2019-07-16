@@ -1,0 +1,12 @@
+{
+    "exclude": ["(^node_modules/)", "(^src/lib/)"],
+    "linters": {
+        "JavaScript ": {
+            "type": "eslint",
+            "include": "(src/.*\\.js$)",
+            "bin": "./bin/host_eslint.sh",
+            "eslint.config": ".eslintrc.js",
+            "eslint.env": "browser"
+        }
+    }
+}
