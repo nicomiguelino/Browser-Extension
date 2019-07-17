@@ -1,5 +1,10 @@
 'use strict';
 
+import '../../lib/vendor/bootstrap/css/bootstrap.css';
+import '../css/style.css';
+import "../../lib/vendor/cookie.js";
+import "../../lib/vendor/normalize-url.js";
+
 export function assert(condition, msg=undefined) {
     if (!condition)
         throw msg ? msg : "Assertion error";

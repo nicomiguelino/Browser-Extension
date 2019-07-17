@@ -1,13 +1,31 @@
-Build
------
+Develop
+-------
 
-1. Compile the haml.
-1. Zip it up:
+The extension is built using webpack.
 
-        zip -r screenly-chrome-extension-0.2.zip -x lib/vendor/jasmine *.html assets lib *.json *.js zip -r screenly-chrome-extension-0.2.zip *.html assets lib *.json *.js -x "lib/vendor/jasmine*"
+```
+docker-compose up
+```
+
+Now load the content of the `dist/` folder as an unpacked extension in Chrome. As you make changes to the code, dist is automatically rebuilt.
+
+Distribute
+----------
+
+```
+docker-compose build
+docker run \
+    --rm -ti \
+    -v $(pwd):/app:delegated \
+    -v /app/node_modules \
+    sce_webpack:latest npx webpack --config webpack.prod.js
+
+(cd dist && zip -r ../screenly-chrome-extension-0.3.zip *)
+```
 
 Unit testing
 ------------
 
-1. Load the extension as an unpacked extension.
-2. Find the extension URL and then open `chrome-extension://extension-id/test/tests.html` in Chrome.
+1. Build the extension in dev mode.
+2. Load the extension as an unpacked extension from the `dist` folder.
+3. Find the extension URL and then open `chrome-extension://extension-id/test/tests.html` in Chrome.
