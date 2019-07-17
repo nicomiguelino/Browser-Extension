@@ -171,15 +171,23 @@ export class State {
 
                 console.debug("State: ", state);
                 return browser.storage.sync.set({'state': state})
-                    .catch(() => {
-                        console.error("Unable to save state %s -> %s", url, savedState);
-                        // Assume it's because storage is full. Try to set just one key.
+                    .catch((error) => {
+                        console.error("Unable to save state %s -> %s (%s)", url, assetId, error);
+
+                        if (!error || !error.message || !error.message.includes("QUOTA_BYTES")) {
+                            // Unknown error. Ignore.
+                            throw error;
+                        }
+
+                        // Storage full - clear it, then try again.
                         // TODO Use LRU to ensure the dictionary doesn't ever grow larger than the
                         // sync storage limit.
-                        return browser.stoage.sync.remove('state').then(() => {
-                            if (assetId)
-                                return browser.storage.sync.set({'state': {url: state}});
-                            else
+                        return browser.storage.sync.remove('state').then(() => {
+                            if (assetId) {
+                                state = {};
+                                state[url] = savedState;
+                                return browser.storage.sync.set({'state': state});
+                            } else
                                 return browser.storage.sync.set({'state': {}});
                         });
                     });
