@@ -18,7 +18,8 @@ docker run \
     --rm -ti \
     -v $(pwd):/app:delegated \
     -v /app/node_modules \
-    sce_webpack:latest npx webpack --config webpack.prod.js
+    sce_webpack:latest \
+    /bin/bash -c "npx webpack --config webpack.prod.js"
 
 (cd dist && zip -r ../screenly-chrome-extension-0.3.zip *)
 ```
@@ -32,7 +33,8 @@ docker run \
     --rm -ti \
     -v $(pwd):/app:delegated \
     -v /app/node_modules \
-    sce_webpack:latest npx webpack --config webpack.dev.js && npm test
+    sce_webpack:latest \
+    /bin/bash -c "npx webpack --config webpack.dev.js && npm test"
 
 ```
 
