@@ -5,12 +5,11 @@ module.exports = function(config) {
         frameworks: ['jasmine'],
         files: ['dist/tests.bundle.js'],
         reporters: ['progress'],
-        port: 9876,  // karma web server port
+        port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
         browsers: ['ChromeHeadlessNoSandbox'],
         autoWatch: false,
-        // singleRun: false, // Karma captures browsers, runs the tests and exits
         concurrency: Infinity,
         customLaunchers: {
             ChromeHeadlessNoSandbox: {
