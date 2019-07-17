@@ -97,7 +97,7 @@ function addToScreenly() {
                         throw "Unknown error";
                     }
                 }).catch(() => {
-                    showFailure(currentAssetId ? "Failed to update asset." : "Failed to save web page.");
+                    showFailure(state ? "Failed to update asset." : "Failed to save web page.");
                 });
         });
 }
