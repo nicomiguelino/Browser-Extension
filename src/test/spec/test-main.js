@@ -91,6 +91,19 @@ describe("State.simplifyUrl", function() {
 
 class StateMocker {
     constructor() {
+        if (!window.browser) {
+            // If we're in Headless Chrome for testing, we don't have `browser` nor `chrome`. Stub it out.
+            window.browser = {
+                storage: {
+                    sync: {
+                        set: () => {},
+                        get: () => {},
+                        remove: () => {},
+                    }
+                }
+            }
+        }
+
         /* eslint-disable jasmine/no-unsafe-spy */
 
         this.fakeStorage = {};
