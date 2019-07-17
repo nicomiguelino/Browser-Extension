@@ -65,19 +65,19 @@ function addToScreenly() {
         };
     }
 
-    const currentAssetId = currentProposal.assetId;
+    const state = currentProposal.state;
     let action;
 
-    if (!currentAssetId) {
+    if (!state) {
         action = createWebAsset(currentProposal.user, currentProposal.url, currentProposal.title, headers, disableVerification);
     } else {
-        action = updateWebAsset(currentAssetId, currentProposal.user, currentProposal.url, currentProposal.title, headers, disableVerification);
+        action = updateWebAsset(state.assetId, currentProposal.user, currentProposal.url, currentProposal.title, headers, disableVerification);
     }
 
     action
         .then((result) => {
             console.debug(result);
-            State.setAssetId(currentProposal.url, result.id);
+            State.setSavedAssetState(currentProposal.url, result.id, includeAuth, disableVerification);
             showSuccess(getAssetDashboardLink(result.id));
         })
         .catch((error) => {
@@ -97,7 +97,7 @@ function addToScreenly() {
                         throw "Unknown error";
                     }
                 }).catch(() => {
-                    showFailure(currentAssetId ? "Failed to update asset." : "Failed to save web page.");
+                    showFailure(state ? "Failed to update asset." : "Failed to save web page.");
                 });
         });
 }
@@ -106,34 +106,36 @@ function updateProposal(newProposal) {
     currentProposal = newProposal;
     const url = currentProposal.url;
 
-    return State.getAssetId(url)
-        .then((assetId) => {
-            if (assetId)
+    return State.getSavedAssetState(url)
+        .then((state) => {
+            if (state)
                 // Does the asset still exist?
-                return getWebAsset(assetId, newProposal.user)
+                return getWebAsset(state.assetId, newProposal.user)
                     .then(() => {
                         // Yes it does. Proceed with the update path.
-                        return assetId;
+                        return state;
                     })
                     .catch((error) => {
                         if (error.status === 404) {
                             // It's gone. Proceed like if we never had it.
-                            State.setAssetId(url, null);
+                            State.setSavedAssetState(url, null);
                             return undefined;
                         }
 
                         throw error;
                     });
         })
-        .then((assetId) => {
-            currentProposal.assetId = assetId;
+        .then((state) => {
+            currentProposal.state = state;
+
 
             elements.proposalPage.querySelector("#title").textContent = currentProposal.title;
             elements.proposalPage.querySelector("#url").textContent = currentProposal.url;
             elements.proposalPage.querySelector("#hostname").textContent = new URL(url).hostname;
 
-            console.info(`URL ${url} associated with asset ID ${assetId}`);
-            if (assetId) {
+            if (state) {
+                console.info(`URL ${url} associated with asset ID ${state.assetId}`);
+                elements.withAuthCheckbox.checked = state.withCookies;
                 hideElement(elements.addLabel);
                 showElement(elements.updateLabel);
             } else {

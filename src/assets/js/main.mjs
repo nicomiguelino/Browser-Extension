@@ -150,29 +150,35 @@ export class State {
         })
     }
 
-    static setAssetId(url, assetId) {
+    static setSavedAssetState(url, assetId, withCookies, withBypass) {
         url = State.simplifyUrl(url);
         console.debug(`Saving ${url} -> ${assetId}`);
+
+        const savedState = {
+            assetId: assetId,
+            withCookies: withCookies,
+            withBypass: withBypass
+        };
 
         return browser.storage.sync.get(['state'])
             .then((state) => {
                 state = state || {};
 
-                if (assetId)
-                    state[url] = assetId;
-                else
+                if (assetId) {
+                    state[url] = savedState;
+                } else
                     delete state[url];
 
                 console.debug("State: ", state);
                 return browser.storage.sync.set({'state': state})
                     .catch(() => {
-                        console.error("Unable to save state %s -> %s", url, assetId);
+                        console.error("Unable to save state %s -> %s", url, savedState);
                         // Assume it's because storage is full. Try to set just one key.
                         // TODO Use LRU to ensure the dictionary doesn't ever grow larger than the
                         // sync storage limit.
                         return browser.stoage.sync.remove('state').then(() => {
                             if (assetId)
-                                return browser.storage.sync.set({'state': {url: assetId}});
+                                return browser.storage.sync.set({'state': {url: state}});
                             else
                                 return browser.storage.sync.set({'state': {}});
                         });
@@ -180,14 +186,19 @@ export class State {
             });
     }
 
-    static getAssetId(url) {
+    static getSavedAssetState(url) {
         url = State.simplifyUrl(url);
         console.debug(`Reading back ${url}`);
 
         return browser.storage.sync.get(['state'])
             .then(({state}) => {
                 state = state || {};
-                return state[url];
+                const v = state[url];
+                if (typeof v != "object") {
+                    // Backwards compatibility with 0.2. Just ignore the old format.
+                    return undefined;
+                }
+                return v;
             });
     }
 }
