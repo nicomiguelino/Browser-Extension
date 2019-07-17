@@ -10,7 +10,7 @@ module.exports = merge(common, {
 
     plugins: [
         // It would be nicer to just import jasmine and let webpack handle the rest but
-        // based on this SO question, Jasmine seems incompatible with that approach.
+        // Jasmine seems incompatible with that approach. It doesn't import right.
         new CopyWebpackPlugin([{
             from: "src/lib/vendor/jasmine",
             to: "lib/vendor/jasmine",

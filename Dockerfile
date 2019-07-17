@@ -8,8 +8,3 @@ RUN chmod -R 777 /output
 ADD package.json /app/package.json
 ADD package-lock.json /app/package-lock.json
 RUN npm install --quiet
-
-# COPY ./ /app/
-
-# CMD ["pause"]
-#CMD ["npm", "run", "build"]
