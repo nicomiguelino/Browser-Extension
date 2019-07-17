@@ -170,6 +170,34 @@ describe("State", function() {
         });
     });
 
+    it("save asset with equivalent url should overwrite", async () => {
+        new StateMocker();
+
+        await State.setSavedAssetState("https://example.com", "abc", true, false);
+        await State.setSavedAssetState("https://example.com/", "def", false, true);
+        const r = await State.getSavedAssetState("https://example.com");
+
+        expect(r).toEqual({
+            assetId: "def",
+            withCookies: false,
+            withBypass: true
+        });
+    });
+
+    it("get asset for equivalent url should get equivalent", async () => {
+        new StateMocker();
+
+        await State.setSavedAssetState("https://example.com/?a=0&b=1#banana", "abc", true, false);
+        const r = await State.getSavedAssetState("https://example.com/?b=1&a=0");
+
+        expect(r).toEqual({
+            assetId: "abc",
+            withCookies: true,
+            withBypass: false
+        });
+    });
+
+
     it("save asset with null should clear save", async () => {
         new StateMocker();
 
