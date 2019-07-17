@@ -6,8 +6,10 @@ import {
     assert,
     fetchToken,
     getUser,
+    hideElement,
     setButtonWaitState,
-    showPage
+    showElement,
+    showPage,
 } from "./main.mjs";
 
 const elements = {
@@ -15,6 +17,7 @@ const elements = {
     signInForm: document.querySelector('form.sign-in'),
     signInPage: document.querySelector('#sign-in-page'),
     signInButton: document.querySelector('button#sign-in-submit'),
+    signInError: document.querySelector('#sign-in-error'),
     signOutButton: document.querySelector('button#sign-out'),
     signUpLink: document.querySelector('a#sign-up-link'),
 };
@@ -25,6 +28,7 @@ function reload() {
 
 function submitSignIn(e) {
     e.preventDefault();
+    hideElement(elements.signInError);
     setButtonWaitState(elements.signInButton, true);
 
     const email = document.querySelector('form.sign-in #email').value;
@@ -38,6 +42,8 @@ function submitSignIn(e) {
         }).then(reload);
     }).catch(error => {
         console.error(error);
+        showElement(elements.signInError);
+        setButtonWaitState(elements.signInButton, false);
     });
 }
 

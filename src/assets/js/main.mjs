@@ -42,7 +42,7 @@ function callApi(method, url, data=undefined, token=undefined) {
     };
 
     if (data !== undefined && data !== null) {
-        init.body = JSON.stringify(data)
+        init.body = JSON.stringify(data);
     }
 
     if (token) {
@@ -56,6 +56,10 @@ function callApi(method, url, data=undefined, token=undefined) {
             }
 
             return response.json();
+        }).then((jsonResponse) => {
+            // This is useful when debugging.
+            // console.info("Response body: " + JSON.stringify(jsonResponse));
+            return jsonResponse;
         }).catch((error) => {
             // Do some basic logging but then just rethrow the error.
 
