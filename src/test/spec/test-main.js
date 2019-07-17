@@ -19,7 +19,7 @@ describe("main.fetchToken", function() {
         spyOn(window, 'fetch').and.returnValue(mockFetchResponse(401, "", ""));
 
         try {
-            let response = await fetchToken("myname", "mypass");
+            await fetchToken("myname", "mypass");
             fail();
         } catch(error) {
             expect(error.status).toBe(401);
@@ -32,6 +32,7 @@ describe("main.fetchToken", function() {
         spyOn(window, 'fetch').and.returnValue(mockFetchResponse(200, "", "{\"username\":\"siker+lasershark12@norwinter.com\",\"token\":\"deadbeef\"}"));
 
         let response = await fetchToken("siker+lasershark12@norwinter.com", "banana");
+
         expect(response.username).toBe("siker+lasershark12@norwinter.com");
         expect(response.token).toBe("deadbeef");
         expect(window.fetch).toHaveBeenCalledWith( 'https://api.screenlyapp.com/api/v3/tokens/', { method: 'POST', headers: { "Content-Type": 'application/json' }, body: '{"username":"siker+lasershark12@norwinter.com","password":"banana"}'});
