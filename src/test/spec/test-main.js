@@ -1,5 +1,8 @@
 'use strict';
 
+/* global browser */
+
+
 import {
     fetchToken,
     State
@@ -88,6 +91,8 @@ describe("State.simplifyUrl", function() {
 
 class StateMocker {
     constructor() {
+        /* eslint-disable jasmine/no-unsafe-spy */
+
         this.fakeStorage = {};
         this.nextFailure = null;
 
@@ -133,8 +138,9 @@ class StateMocker {
                 }
                 return Promise.resolve();
             }
-
         });
+
+        /* eslint-enable jasmine/no-unsafe-spy */
     }
 
     setNextFailure(aFailure) {
