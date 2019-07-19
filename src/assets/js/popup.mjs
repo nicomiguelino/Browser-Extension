@@ -173,8 +173,6 @@ function prepareToAddToScreenly(user) {
 
     console.info(user);
 
-    showSpinner();
-
     browser.tabs.executeScript({
         code: '[window.location.href, document.title, performance.getEntriesByType("resource").map(e => e.name)]',
     }).then(([[pageUrl, pageTitle, resourceEntries]]) => {
@@ -232,6 +230,8 @@ export function initPopup() {
     for (let [key, value] of Object.entries(elements)) {
         assert(value, `${key} not found`);
     }
+
+    showSpinner();
 
     elements.siteLink.addEventListener('click', () => {
         browser.tabs.create({ url: elements.siteLink.href });
