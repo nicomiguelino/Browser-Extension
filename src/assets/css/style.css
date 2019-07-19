@@ -4,7 +4,10 @@ body.popup .page {
     display: grid;
 }
 
-.container-fluid {
+.container-small {
+    margin: auto;
+    width: 100%;
+    max-width: 350px;
 }
 
 #sign-in-page {

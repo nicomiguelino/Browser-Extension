@@ -5,38 +5,34 @@
     %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", :name => "viewport"}
     %title Options - Screenly
   %body
-    .container
-      .row
-        .offset-4.col-4.text-center.mt-5.mb-5
-          %img{:src => "assets/images/screenly-logo-128.png", :width => "64"}
+    .container.container-small
+      .text-center.mt-5.mb-5
+        %img{:src => "assets/images/screenly-logo-128.png", :width => "64"}
 
-      .row.page#sign-in-page
-        .offset-4.col-4
-          %form.sign-in
-            .form-group
-              %input.form-control#email{:type => "email", :placeholder => "Email address", :required => "true"}
-            .form-group
-              %input.form-control#password{:type => "password", :placeholder => "Password", :required => "true"}
-            %button.btn.btn-primary.w-100#sign-in-submit{:type => "submit"}
-              %span.spinner.spinner-border.spinner-border-sm{:ariaHidden => "true", :hidden => "true"}
-              %span.label Sign In
-            .alert.alert-danger.mt-3.mb-0#sign-in-error{:hidden => "true"}
-              Unable to sign in. Check your credentials and internet connectivity, then try again.
-          %section.mt-2
-            .small.text-center
-              Need an account?
-              %a#sign-up-link
-                Sign Up.
-
+      .page#sign-in-page
+        %form.sign-in
+          .form-group
+            %input.form-control#email{:type => "email", :placeholder => "Email address", :required => "true"}
+          .form-group
+            %input.form-control#password{:type => "password", :placeholder => "Password", :required => "true"}
+          %button.btn.btn-primary.w-100#sign-in-submit{:type => "submit"}
+            %span.spinner.spinner-border.spinner-border-sm{:ariaHidden => "true", :hidden => "true"}
+            %span.label Sign In
+          .alert.alert-danger.mt-3.mb-0#sign-in-error{:hidden => "true"}
+            Unable to sign in. Check your credentials and internet connectivity, then try again.
+        %section.mt-2
+          .small.text-center
+            Need an account?
+            %a#sign-up-link
+              Sign Up.
 
       .page#signed-in-page
-        .offset-4.col-4
-          %section
-            Signed in as:
-            %span.font-weight-bold.username
-          %section.mt-3
-            %button.btn.btn-primary.w-100#sign-out{:type => "submit"}
-              %span.spinner.spinner-border.spinner-border-sm{:ariaHidden => "true", :hidden => "true"}
-              %span.label Sign Out
+        %section
+          Signed in as:
+          %span.font-weight-bold.text-break.username
+        %section.mt-3
+          %button.btn.btn-primary.w-100#sign-out{:type => "submit"}
+            %span.spinner.spinner-border.spinner-border-sm{:ariaHidden => "true", :hidden => "true"}
+            %span.label Sign Out
 
     %script{:src => "lib/vendor/browser-polyfill.min.js"}
