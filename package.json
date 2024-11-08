@@ -29,7 +29,6 @@
   },
   "scripts": {
     "test": "karma start --single-run --browsers ChromeHeadlessNoSandbox karma.conf.js",
-    "teamcity": "karma start --reporters teamcity --colors false --single-run --browsers ChromeHeadlessNoSandbox karma.conf.js",
     "build": "webpack --config webpack.prod.js"
   },
   "author": "Screenly, Inc."

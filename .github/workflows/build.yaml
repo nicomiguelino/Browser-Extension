@@ -14,30 +14,32 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    name: Build and generate Artifact
+    name: Build and generate artifact
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build
+      - name: Build Docker images
         run: |
           docker compose build
 
       # This step should probably be rewritten
-      - name: Generate
+      - name: Run unit tests
         run: |
           docker run \
-            --rm \
+            --rm -ti \
+            -v $(pwd):/app:delegated \
+            -v /app/node_modules \
             sce_webpack:latest \
-            /bin/bash -c "npx webpack --config webpack.dev.js && npm run teamcity"
+            /bin/bash -c "npx webpack --config webpack.dev.js && npm run test"
 
+      # TODO: Uncomment this step when ready.
+      # - name: Generate
+      #   run: |
+      #     mkdir artifacts
 
-      - name: Generate
-        run: |
-          mkdir artifacts
-
-          docker run \
-            --rm \
-            -v $(pwd)/artifacts:/app/artifacts:delegated \
-            sce_webpack:latest \
-            /bin/bash -c "npm run build && cd dist && zip -r ../artifacts/screenly-chrome-extension.zip *"
+      #     docker run \
+      #       --rm \
+      #       -v $(pwd)/artifacts:/app/artifacts:delegated \
+      #       sce_webpack:latest \
+      #       /bin/bash -c "npm run build && cd dist && zip -r ../artifacts/screenly-chrome-extension.zip *"
