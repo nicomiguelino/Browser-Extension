@@ -16,3 +16,4 @@ _gulp-version
 /popup.html
 /dist
 /src/test/tests.html
+node_modules
