@@ -3,10 +3,13 @@ name: Build
 
 on:
   pull_request:
-    types: [opened, reopened]
+    branches:
+    - master
+    - production
   push:
     branches:
       - master
+      - production
 jobs:
   deploy:
     runs-on: ubuntu-latest
