@@ -1,20 +1,18 @@
-Develop
--------
+# Develop
 
 The extension is built using webpack.
 
-```
-docker-compose up
+```bash
+$ docker compose up
 ```
 
 Now load the content of the `dist/` folder as an unpacked extension in Chrome. As you make changes to the code, dist is automatically rebuilt.
 
-Distribute
-----------
+# Distribute
 
-```
-docker-compose build
-docker run \
+```bash
+$ docker compose build
+$ docker run \
     --rm -ti \
     -v $(pwd):/app:delegated \
     -v /app/node_modules \
@@ -24,12 +22,11 @@ docker run \
 (cd dist && zip -r ../screenly-chrome-extension-0.3.zip *)
 ```
 
-Unit testing
-------------
+# Unit testing
 
-```
-docker-compose build
-docker run \
+```bash
+$ docker compose build
+$ docker run \
     --rm -ti \
     -v $(pwd):/app:delegated \
     -v /app/node_modules \
