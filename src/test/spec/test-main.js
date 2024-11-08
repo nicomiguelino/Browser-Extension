@@ -6,7 +6,7 @@
 import {
     fetchToken,
     State
-} from "../../assets/js/main";
+} from "../../assets/js/main.mjs";
 
 function mockFetchResponse(status, statusText, body) {
     return Promise.resolve({

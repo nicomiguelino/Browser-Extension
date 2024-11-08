@@ -1,5 +1,5 @@
 ---
-name: Build
+name: Build Screenly Chrome Extension
 
 on:
   pull_request:
@@ -14,30 +14,36 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    name: Build and generate Artifact
+    name: Build and Generate Artifact
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build
+      - name: Build Docker images
         run: |
           docker compose build
 
-      # This step should probably be rewritten
-      - name: Generate
+      - name: Run Unit Tests
         run: |
           docker run \
             --rm \
+            -v $(pwd):/app:delegated \
+            -v /app/node_modules \
             sce_webpack:latest \
-            /bin/bash -c "npx webpack --config webpack.dev.js && npm run teamcity"
+            /bin/bash -c "npx webpack --config webpack.dev.js && npm run test"
 
-
-      - name: Generate
+      - name: Build and Package the Extension
         run: |
           mkdir artifacts
-
           docker run \
             --rm \
             -v $(pwd)/artifacts:/app/artifacts:delegated \
+            -v /app/artifacts/node_modules \
             sce_webpack:latest \
             /bin/bash -c "npm run build && cd dist && zip -r ../artifacts/screenly-chrome-extension.zip *"
+
+      - name: Upload Archive as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenly-chrome-extension
+          path: artifacts/screenly-chrome-extension.zip
