@@ -32,19 +32,19 @@ function submitSignIn(e) {
     setButtonWaitState(elements.signInButton, true);
 
     const email = document.querySelector('form.sign-in #email').value;
-    const password = document.querySelector('form.sign-in #password').value;
-    fetchToken(email, password).then(response => {
-        console.log(response);
+    const token = document.querySelector('form.sign-in #token').value;
 
-        browser.storage.sync.set({
-            username: response.username,
-            token: response.token,
-        }).then(reload);
-    }).catch(error => {
-        console.error(error);
-        showElement(elements.signInError);
-        setButtonWaitState(elements.signInButton, false);
-    });
+    browser.storage.sync
+        .set({
+            username: email,
+            token: token,
+        })
+        .then(reload)
+        .catch(error => {
+            console.error(error);
+            showElement(elements.signInError);
+            setButtonWaitState(elements.signInButton, false);
+        });
 }
 
 function signOut() {
