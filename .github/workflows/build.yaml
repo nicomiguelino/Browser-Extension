@@ -47,7 +47,8 @@ jobs:
 
       - name: Compress
         run: |
-          zip -r screenly-chrome-extension.zip artifacts/dist/
+          cd artifacts/dist/
+          zip -r ${{ github.workspace }}/screenly-chrome-extension.zip .
 
       - name: Attest
         uses: actions/attest-build-provenance@v1
