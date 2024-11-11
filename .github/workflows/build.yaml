@@ -45,16 +45,20 @@ jobs:
             sce_webpack:latest \
             /bin/bash -c "npm run build && cp -r dist/ artifacts/"
 
+      - name: Compress
+        run: |
+          zip -r screenly-chrome-extension.zip artifacts/dist/
+
       - name: Attest
         uses: actions/attest-build-provenance@v1
         with:
-          subject-path: '${{ github.workspace }}/artifacts/dist/*'
+          subject-path: '${{ github.workspace }}/screenly-chrome-extension.zip'
 
       - name: Upload Archive as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: screenly-chrome-extension
-          path: artifacts/dist
+          path: screenly-chrome-extension.zip
 
   generate-sbom:
     runs-on: ubuntu-latest
