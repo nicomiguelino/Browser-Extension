@@ -59,7 +59,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: screenly-chrome-extension
-          path: screenly-chrome-extension.zip
+          path: artifacts/dist
 
   generate-sbom:
     runs-on: ubuntu-latest
