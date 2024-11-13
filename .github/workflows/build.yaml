@@ -75,8 +75,6 @@ jobs:
           allowUpdates: true
           prerelease: true
           artifacts: "screenly-chrome-extension-${{ github.ref_name }}.zip"
-          tag: ${{ github.ref_name }}
-          commit: ${{ github.sha }}
 
   generate-sbom:
     runs-on: ubuntu-latest
