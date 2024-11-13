@@ -16,7 +16,7 @@ jobs:
     name: Build and Generate Artifact
     permissions:
       id-token: write
-      contents: read
+      contents: write
       attestations: write
     steps:
       - name: Checkout
