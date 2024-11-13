@@ -61,13 +61,13 @@ jobs:
           name: screenly-chrome-extension
           path: artifacts/dist
 
-      - name: Copy Artifact
+      - name: Prepare Release
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
-          ls -l ${{ github.workspace }} # TODO: Remove.
           cp \
             ${{ github.workspace }}/screenly-chrome-extension.zip \
-            ${{ github.workspace }}/screenly-chrome-extension-renamed.zip
-          ls -l ${{ github.workspace }} # TODO: Remove.
+            ${{ github.workspace }}/screenly-chrome-extension-${{ github.ref_name }}.zip
+
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: ncipollo/release-action@v1.11.2
