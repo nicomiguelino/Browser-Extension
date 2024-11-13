@@ -61,6 +61,21 @@ jobs:
           name: screenly-chrome-extension
           path: artifacts/dist
 
+      - name: Copy Artifact
+        run: |
+          cp \
+            ${{ github.workspace }}/screenly-chrome-extension.zip \
+            ${{ github.workspace }}/screenly-chrome-extension-${{ github.ref_name }}.zip
+      - name: Create Release
+        # if: startsWith(github.ref, 'refs/tags/') # TODO: Uncomment after testing.
+        uses: ncipollo/release-action@v1.11.2
+        with:
+          allowUpdates: true
+          prerelease: true
+          artifacts: "screenly-chrome-extension-${{ github.ref_name }}.zip"
+          tag: ${{ github.ref_name }}
+          commit: ${{ github.sha }}
+
   generate-sbom:
     runs-on: ubuntu-latest
     name: Generate SBOM
