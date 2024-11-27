@@ -16,3 +16,4 @@ _gulp-version
 node_modules
 
 screenly-chrome-extension-*.zip
+src/manifest.json
