@@ -29,6 +29,11 @@
 
 ## :seedling: Install
 
+> [!NOTE]
+> The extension is only available for installation on Chrome.
+> For Firefox, you can [package](#distribute) the extension and install the
+> extension as a [temporary add-on](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/).
+
 * Install the extension from the [Chrome Web Store](https://chromewebstore.google.com/detail/save-to-screenly/kcoehkngnbhlmdcgcadliaadlmbjmcln).
 
 ## :computer: Develop
@@ -62,9 +67,19 @@ $ VERSION=<EXTENSION_VERSION> \
 $ ./bin/run_tests.sh
 ```
 
+### Chrome
+
 * Build the extension in dev mode.
 * Load the extension as an unpacked extension from the `dist` folder.
-* Find the extension URL and then open `chrome-extension://extension-id/test/tests.html` in Chrome.
+* Find the extension URL and then open `chrome-extension://<extension-id>/test/tests.html` in Chrome.
+
+### Firefox
+
+* Build the extension in dev mode.
+* Open Firefox and navigate to `about:debugging`.
+* Click on **This Firefox** and then **Load Temporary Add-on**.
+  * You can either select the `manifest.json` file or the zipped extension.
+* Find the extension URL and then open `moz-extension://<extension-id>/test/tests.html` in Firefox.
 
 ## :rocket: Release
 
