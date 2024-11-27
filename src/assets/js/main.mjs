@@ -3,9 +3,9 @@
 /* global browser */
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../scss/style.scss';
+import '~/scss/style.scss';
 import 'bootstrap';
-import "../../lib/vendor/normalize-url.js";
+import "lib/vendor/normalize-url.js";
 
 export function assert(condition, msg=undefined) {
   if (!condition)

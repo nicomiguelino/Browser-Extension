@@ -9,7 +9,7 @@ import {
   setButtonWaitState,
   showElement,
   showPage,
-} from "./main.mjs";
+} from "~/js/main.mjs";
 
 const elements = {
   signedInPage: document.querySelector('#signed-in-page'),

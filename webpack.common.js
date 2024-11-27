@@ -79,10 +79,10 @@ module.exports = {
   ],
 
   resolve: {
-    modules: [
-      path.resolve(__dirname, 'src'),
-      'node_modules'
-    ]
+    alias: {
+      '~': path.resolve(__dirname, 'src/assets'),
+      'lib': path.resolve(__dirname, 'src/lib'),
+    },
   },
 
   watchOptions: {
