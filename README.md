@@ -36,15 +36,24 @@
 The extension is built using [webpack](https://webpack.js.org/).
 
 ```bash
-$ docker compose up --build
+$ PLATFORM=<PLATFORM> \
+  VERSION=<VERSION> \
+    ./bin/start_development_mode.sh
 ```
+
+> [!IMPORTANT]
+> * `VERSION` can be any valid version semver string (`X.Y.Z`),
+>   where `X`, `Y`, and `Z` are non-negative numbers.
+> * `PLATFORM` can be either `chrome` or `firefox`.
 
 Now load the content of the `dist/` folder as an unpacked extension in Chrome. As you make changes to the code, the extension is automatically rebuilt.
 
 ### Distribute
 
 ```bash
-$ VERSION=<EXTENSION_VERSION> ./bin/package_extension.sh
+$ VERSION=<EXTENSION_VERSION> \
+  PLATFORM=<PLATFORM> \
+    ./bin/package_extension.sh
 ```
 
 ## :test_tube: Run Unit Tests
