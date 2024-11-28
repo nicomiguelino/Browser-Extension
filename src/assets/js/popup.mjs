@@ -2,7 +2,7 @@
 
 /* global browser */
 
-import '~/scss/sweetalert-icons.scss';
+import '@/scss/sweetalert-icons.scss';
 
 import {
   assert,

@@ -1,5 +1,5 @@
 'use strict';
 
-import {initPopup} from "~/js/popup.mjs";
+import {initPopup} from "@/popup.mjs";
 
 await initPopup();

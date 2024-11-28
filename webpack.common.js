@@ -80,8 +80,11 @@ module.exports = {
 
   resolve: {
     alias: {
-      '~': path.resolve(__dirname, 'src/assets'),
-      'lib': path.resolve(__dirname, 'src/lib'),
+      '@/options.mjs': path.resolve(__dirname, 'src/assets/js/options.mjs'),
+      '@/popup.mjs': path.resolve(__dirname, 'src/assets/js/popup.mjs'),
+      '@/main.mjs': path.resolve(__dirname, 'src/assets/js/main.mjs'),
+      '@/scss': path.resolve(__dirname, 'src/assets/scss'),
+      '@/vendor': path.resolve(__dirname, 'src/lib/vendor'),
     },
   },
 
