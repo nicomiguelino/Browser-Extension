@@ -19,10 +19,10 @@
     </a>
     <br>
     <a noopener" href="https://chromewebstore.google.com/detail/save-to-screenly/kcoehkngnbhlmdcgcadliaadlmbjmcln">
-      <img alt="Chrome Web Store" src="https://img.shields.io/badge/Chrome-141e24.svg?&style=for-the-badge&logo=google-chrome">
+      <img alt="Chrome Web Store Version" src="https://img.shields.io/chrome-web-store/v/kcoehkngnbhlmdcgcadliaadlmbjmcln?style=for-the-badge&logo=google-chrome">
     </a>
     <a href="https://addons.mozilla.org/en-US/firefox/addon/save-to-screenly/">
-      <img alt="Firefox Add-ons" src="https://img.shields.io/badge/Firefox-141e24.svg?&style=for-the-badge&logo=firefox-browser">
+      <img alt="Mozilla Add-on Version" src="https://img.shields.io/amo/v/save-to-screenly?style=for-the-badge&logo=firefox-browser">
     </a>
 </p>
 
