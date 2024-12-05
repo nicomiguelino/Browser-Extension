@@ -6,12 +6,25 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
-    "popup": './src/assets/js/boot-popup.mjs',
-    "options": './src/assets/js/boot-options.mjs',
+    'popup': './src/assets/js/popup.jsx',
+    'options': './src/assets/js/options.jsx',
   },
 
   module: {
     rules: [
+      {
+        test: /.(js|jsx|mjs)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react'
+            ]
+          }
+        }
+      },
       {
         test: /\.s?css$/,
         use: [
@@ -80,12 +93,14 @@ module.exports = {
 
   resolve: {
     alias: {
-      '@/options.mjs': path.resolve(__dirname, 'src/assets/js/options.mjs'),
-      '@/popup.mjs': path.resolve(__dirname, 'src/assets/js/popup.mjs'),
-      '@/main.mjs': path.resolve(__dirname, 'src/assets/js/main.mjs'),
+      '@/store': path.resolve(__dirname, 'src/assets/js/store.js'),
+      '@/main': path.resolve(__dirname, 'src/assets/js/main.mjs'),
+      '@/components': path.resolve(__dirname, 'src/assets/js/components'),
+      '@/features': path.resolve(__dirname, 'src/assets/js/features'),
       '@/scss': path.resolve(__dirname, 'src/assets/scss'),
       '@/vendor': path.resolve(__dirname, 'src/lib/vendor'),
     },
+    extensions: ['.js', '.jsx', '.mjs'],
   },
 
   watchOptions: {
