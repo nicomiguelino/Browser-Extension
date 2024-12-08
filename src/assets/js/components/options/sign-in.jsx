@@ -10,7 +10,7 @@ import { TokenHelpText } from '@/components/options/token-help-text';
 
 const SignInFormError = () => {
   return (
-    <div className='alert alert-danger mt-2' role='alert'>
+    <div className='text-danger mt-3' role='alert'>
       Unable to sign in. Check your credentials and internet connectivity,
       then try again.
     </div>
@@ -22,12 +22,6 @@ export const SignInForm = () => {
   const [showSignInFormError, setShowSignInFormError] = useState(false);
   const [token, setToken] = useState('');
   const dispatch = useDispatch();
-
-  const getSignUpLink = () => {
-    const baseUrl = 'https://login.screenlyapp.com/sign-up';
-    const queryParams = `next=${window.location.href}`;
-    return `${baseUrl}?${queryParams}`;
-  };
 
   const handleSignInForm = async (event) => {
     event.preventDefault();
@@ -53,19 +47,22 @@ export const SignInForm = () => {
   }
 
   return (
-    <div className="page" id="sign-in-page">
+    <div className="SignInForm page" id="sign-in-page">
       <form className="sign-in">
         <div className="form-group mb-3">
           <input
-            className="form-control"
+            className="form-control shadow-none"
             id="token"
             type="password"
-            placeholder="Token"
+            placeholder="Your token"
             onChange={(event) => setToken(event.target.value)}
           />
         </div>
+
+        <TokenHelpText />
+
         <button
-          className="btn btn-primary w-100"
+          className="btn btn-primary w-100 mt-5"
           id="sign-in-submit"
           type="submit"
           onClick={handleSignInForm}
@@ -81,28 +78,12 @@ export const SignInForm = () => {
           }
         </button>
 
-        <TokenHelpText />
-
         {
           showSignInFormError
             ? <SignInFormError />
             : null
         }
       </form>
-      <section className="mt-2">
-        <div className="small text-center">
-          Need an account?
-          &nbsp;
-          <a
-            id="sign-up-link"
-            href={getSignUpLink()}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Sign Up
-          </a>
-        </div>
-      </section>
     </div>
   );
 };

@@ -1,3 +1,7 @@
+$primary: #982FFF;
+
+@import 'bootstrap/scss/bootstrap';
+
 body.popup {
     .page {
         width: 350px;
@@ -27,15 +31,17 @@ body.popup {
 .container-small {
     margin: auto;
     width: 100%;
-    max-width: 350px;
+    width: 450px;
 }
 
 #sign-in-page {
-    min-height: 400px;
     h1 {
         font-weight: normal;
         font-size: 40px;
     }
+}
+
+#signed-in-page {
 }
 
 .break-anywhere {
@@ -53,4 +59,45 @@ body.popup {
 #fail-message {
     overflow-wrap: break-word;
     max-width: 300px;
+}
+
+.OptionsPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  & .container {
+    border: 0.5px solid #DEDEDE;
+    border-radius: 8px;
+  }
+
+  input {
+    border: 1px solid #DEDEDE;
+    border-radius: 4px;
+
+    &::placeholder {
+      color: #B0B2BF;
+    }
+  }
+
+  a {
+    color: #009CF6;
+  }
+
+  #sign-up-link {
+    color: #000000;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.TokenHelpText {
+  &.alert {
+    background-color: #F9F9F9;
+  }
 }
