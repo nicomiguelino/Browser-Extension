@@ -68,7 +68,7 @@ export const SignInForm = () => {
             <img
               className="mb-3"
               src="assets/images/screenly-logo.svg"
-              width="50"
+              width="64"
             />
             <h3 className="mb-1">Sign In</h3>
           </div>
