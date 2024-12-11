@@ -52,7 +52,7 @@ export const SignInForm = () => {
   }
 
   return (
-    <div className="page mt-2" id="sign-in-page">
+    <div className="page mt-3" id="sign-in-page">
       <div className="d-flex flex-column">
         <section
           className={classNames(
@@ -61,9 +61,15 @@ export const SignInForm = () => {
             'flex-grow-1',
             'justify-content-center',
             'border-0',
+            'pb-2',
           )}
         >
           <div className="text-center">
+            <img
+              className="mb-3"
+              src="assets/images/screenly-logo.svg"
+              width="64"
+            />
             <h3 className="mb-1">Sign In</h3>
           </div>
         </section>
