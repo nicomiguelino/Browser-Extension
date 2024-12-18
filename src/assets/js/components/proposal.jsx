@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { PopupSpinner } from '@/components/popup/popup-spinner';
-import { SaveAuthWarning } from '@/components/popup/save-auth-warning';
-import { SaveAuthHelp } from '@/components/popup/save-auth-help';
+import { PopupSpinner } from '@/components/popup-spinner';
+import { SaveAuthWarning } from '@/components/save-auth-warning';
+import { SaveAuthHelp } from '@/components/save-auth-help';
 
 import * as cookiejs from '@/vendor/cookie';
 import {
@@ -19,7 +19,7 @@ import {
 import {
   notifyAssetSaveSuccess,
   openSettings,
-} from '@/features/popup/popupSlice';
+} from '@/features/popupSlice';
 
 export const Proposal = () => {
   const dispatch = useDispatch();
