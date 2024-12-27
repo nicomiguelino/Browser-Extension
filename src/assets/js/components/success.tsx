@@ -1,4 +1,12 @@
-export const SignInSuccess = () => {
+interface SuccessProps {
+  assetDashboardLink: string;
+}
+
+export const Success: React.FC<SuccessProps> = ({ assetDashboardLink }) => {
+  const openAssetDashboard = () => {
+    window.open(assetDashboardLink);
+  };
+
   return (
     <div className="page" id="success-page">
       <div className="d-flex flex-column">
@@ -15,12 +23,21 @@ export const SignInSuccess = () => {
               </div>
             </div>
             <h3 className="text-center">
-              Sign in successful!
+              Web page saved!
             </h3>
             <p className="text-muted">
-              You can now add and update web assets to your Screenly account.
+              To show the web page on your digital sign, add the
+              web asset to a playlist in your Screenly account.
             </p>
           </div>
+        </section>
+        <section>
+          <button
+            className="btn btn-primary w-100"
+            onClick={openAssetDashboard}
+          >
+            <span className="label">View Asset</span>
+          </button>
         </section>
       </div>
     </div>
