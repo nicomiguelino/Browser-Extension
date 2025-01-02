@@ -7,21 +7,25 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    'popup': './src/assets/js/popup.tsx',
+    'popup': './src/assets/ts/popup.tsx',
   },
 
   module: {
     rules: [
       {
-        test: /\.(js|jsx|mjs|ts|tsx)$/,
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(js|jsx|mjs)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: [
               '@babel/preset-env',
-              '@babel/preset-react',
-              '@babel/preset-typescript'
+              '@babel/preset-react'
             ]
           }
         }
@@ -84,10 +88,10 @@ module.exports = {
 
   resolve: {
     alias: {
-      '@/store': path.resolve(__dirname, 'src/assets/js/store.js'),
-      '@/main': path.resolve(__dirname, 'src/assets/js/main.mjs'),
-      '@/components': path.resolve(__dirname, 'src/assets/js/components'),
-      '@/features': path.resolve(__dirname, 'src/assets/js/features'),
+      '@/store': path.resolve(__dirname, 'src/assets/ts/store.ts'),
+      '@/main': path.resolve(__dirname, 'src/assets/ts/main.ts'),
+      '@/components': path.resolve(__dirname, 'src/assets/ts/components'),
+      '@/features': path.resolve(__dirname, 'src/assets/ts/features'),
       '@/scss': path.resolve(__dirname, 'src/assets/scss'),
       '@/vendor': path.resolve(__dirname, 'src/lib/vendor'),
     },
