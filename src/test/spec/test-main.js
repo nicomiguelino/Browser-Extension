@@ -5,7 +5,7 @@
 
 import {
     State
-} from "../../assets/js/main.mjs";
+} from "@/main";
 
 describe("State.normalizeUrl", function() {
     const behaviours = [
@@ -81,7 +81,6 @@ class StateMocker {
             for (const [key, value] of Object.entries(d)) {
                 this.fakeStorage[key] = value;
             }
-            console.log(this.fakeStorage);
             return Promise.resolve();
         });
 

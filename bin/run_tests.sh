@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
-IFS=$'\n\t'
 
 VERSION=${VERSION:-0.0.0}
 PLATFORM=${PLATFORM:-chrome}
@@ -12,11 +11,11 @@ validate_platform "$PLATFORM"
 generate_manifest "$PLATFORM" "$VERSION"
 
 docker compose build
+
 docker run \
     --rm -ti \
     -v $(pwd):/app:delegated \
     -v /app/node_modules \
     sce_webpack:latest \
-    /bin/bash -c "npx webpack --config webpack.prod.js"
+    /bin/bash -c "npx webpack --config webpack.dev.js && npm test"
 
-(cd dist && zip -r ../screenly-$PLATFORM-extension-$VERSION.zip *)
