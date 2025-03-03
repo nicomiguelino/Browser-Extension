@@ -103,9 +103,35 @@ export const Proposal: React.FC = () => {
 
       setProposal(currentProposal);
 
+      const resetAssetState = async () => {
+        setButtonState('add');
+        setSaveAuthentication(false);
+        setProposal(currentProposal);
+        return State.setSavedAssetState(url, null, false, false);
+      };
+
       if (currentProposal.state) {
         setSaveAuthentication(currentProposal.state.withCookies);
-        setButtonState('update');
+
+        try {
+          const assets = await getWebAsset(
+            currentProposal.state.assetId,
+            currentProposal.user,
+          );
+
+          if (assets.length === 0) {
+            await resetAssetState();
+          } else {
+            setButtonState('update');
+          }
+        } catch (error) {
+          setError((prev) => ({
+            ...prev,
+            show: true,
+            message: `Failed to get asset details: ${(error as Error).message}`
+          }));
+          await resetAssetState();
+        }
       } else {
         setButtonState('add');
       }
@@ -233,6 +259,7 @@ export const Proposal: React.FC = () => {
     }
 
     const state = proposal.state;
+
     try {
       const result = !state
         ? await createWebAsset(
