@@ -209,4 +209,15 @@ export class State {
         return v;
       });
   }
+
+  static removeSavedAssetState(url: string) {
+    url = State.simplifyUrl(url);
+
+    return browser.storage.sync.get(['state'])
+      .then((result: { state?: BrowserStorageState }) => {
+        const state = result.state || {};
+        delete state[url];
+        return browser.storage.sync.set({ state });
+      });
+  }
 }
