@@ -1,4 +1,5 @@
 /// <reference types="chrome"/>
+/* global browser, chrome */
 'use strict';
 
 import normalizeUrl from 'normalize-url';
@@ -95,15 +96,17 @@ export function updateWebAsset(
   url: string,
   title: string,
   headers: object | null,
-  disableVerification: boolean, // eslint-disable-line @typescript-eslint/no-unused-vars
+  disableVerification: boolean,
 ) {
   const queryParams = `id=eq.${encodeURIComponent(assetId || '')}`;
   return callApi(
     'PATCH',
     `https://api.screenlyapp.com/api/v4/assets/?${queryParams}`,
     {
+      // API expects snake_case, so we transform from camelCase
       'title': title,
       'headers': headers,
+      'disable_verification': disableVerification,
     },
     user.token
   );
