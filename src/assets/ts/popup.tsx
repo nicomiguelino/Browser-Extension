@@ -1,14 +1,7 @@
 /* global EventListener */
 import ReactDOM from 'react-dom/client';
-import {
-  useEffect,
-  useState,
-} from 'react';
-import {
-  Provider,
-  useDispatch,
-  useSelector,
-} from 'react-redux';
+import { useEffect, useState } from 'react';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import 'bootstrap-icons/font/bootstrap-icons.scss';
 
 import '@/scss/style.scss';
@@ -44,7 +37,9 @@ const PopupPage: React.FC = () => {
   useEffect(() => {
     dispatch(signIn());
 
-    document.addEventListener('set-asset-dashboard-link', ((event: CustomEvent) => {
+    document.addEventListener('set-asset-dashboard-link', ((
+      event: CustomEvent,
+    ) => {
       setAssetDashboardLink(event.detail);
     }) as EventListener);
   }, []);
@@ -53,7 +48,9 @@ const PopupPage: React.FC = () => {
     <>
       {showSignIn && <SignInForm />}
       {showProposal && <Proposal />}
-      {showSuccess && <AssetSaveSuccess assetDashboardLink={assetDashboardLink} />}
+      {showSuccess && (
+        <AssetSaveSuccess assetDashboardLink={assetDashboardLink} />
+      )}
       {showSignInSuccess && <SignInSuccess />}
       {showSettings && <Settings />}
     </>
@@ -67,5 +64,5 @@ const root = ReactDOM.createRoot(container);
 root.render(
   <Provider store={store}>
     <PopupPage />
-  </Provider>
+  </Provider>,
 );
