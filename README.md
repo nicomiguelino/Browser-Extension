@@ -36,15 +36,14 @@
 
 ## :white_check_mark: Prerequisites
 
-* Linux or macOS &mdash; If you're on Windows, you can use [WSL](https://learn.microsoft.com/en-us/windows/wsl/setup/environment). All of the scripts were written in Bash.
-* Docker &mdash; The easiest way to get started is to install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
-* `jq` &mdash; Most of the scripts in the [`bin/`](/bin/) directory use `jq` to parse JSON. Install it from [here](https://jqlang.org/download/).
-
+- Linux or macOS &mdash; If you're on Windows, you can use [WSL](https://learn.microsoft.com/en-us/windows/wsl/setup/environment). All of the scripts were written in Bash.
+- Docker &mdash; The easiest way to get started is to install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+- `jq` &mdash; Most of the scripts in the [`bin/`](/bin/) directory use `jq` to parse JSON. Install it from [here](https://jqlang.org/download/).
 
 ## :seedling: Install
 
-* Install the extension from the [Chrome Web Store](https://chromewebstore.google.com/detail/save-to-screenly/kcoehkngnbhlmdcgcadliaadlmbjmcln).
-* Install the extension from Firefox [Add Ons](https://addons.mozilla.org/en-US/firefox/addon/save-to-screenly/).
+- Install the extension from the [Chrome Web Store](https://chromewebstore.google.com/detail/save-to-screenly/kcoehkngnbhlmdcgcadliaadlmbjmcln).
+- Install the extension from Firefox [Add Ons](https://addons.mozilla.org/en-US/firefox/addon/save-to-screenly/).
 
 ## :computer: Develop
 
@@ -57,9 +56,10 @@ $ PLATFORM=<PLATFORM> \
 ```
 
 > [!IMPORTANT]
-> * `VERSION` can be any valid version semver string (`X.Y.Z`),
+>
+> - `VERSION` can be any valid version semver string (`X.Y.Z`),
 >   where `X`, `Y`, and `Z` are non-negative numbers.
-> * `PLATFORM` can be either `chrome` or `firefox`.
+> - `PLATFORM` can be either `chrome` or `firefox`.
 
 Now load the content of the `dist/` folder as an unpacked extension in Chrome. As you make changes to the code, the extension is automatically rebuilt.
 
@@ -71,6 +71,31 @@ $ VERSION=<VERSION> \
     ./bin/package_extension.sh
 ```
 
+The name of the packaged extension will be `screenly-<PLATFORM>-extension-<VERSION>.zip`. For example, `screenly-chrome-extension-0.0.1.zip` or `screenly-firefox-extension-0.0.1.zip`.
+
+### Testing Packaged Extensions
+
+> [!NOTE]
+> You can also download the packaged extensions from the [GitHub Releases](https://github.com/Screenly/Browser-Extension/releases) page.
+
+#### Chrome
+
+- Extract the zip file to a folder.
+- Open Chrome and navigate to `chrome://extensions/`.
+- Click on **Load unpacked** and select the folder you extracted the zip file to.
+- The extension should now be loaded and ready to use.
+
+#### Firefox
+
+> [!IMPORTANT]
+> Add-ons installed from a `.zip` file will be uninstalled when Firefox is closed.
+> This means that you will need to re-install the extension every time you open Firefox.
+
+- Open Firefox and navigate to `about:debugging`.
+- Click on **This Firefox** and then **Load Temporary Add-on**.
+- You can either select the `manifest.json` file or the zipped extension.
+- The extension should now be loaded and ready to use.
+
 ## :test_tube: Run Unit Tests
 
 ```bash
@@ -79,17 +104,17 @@ $ ./bin/run_tests.sh
 
 ### Chrome
 
-* Build the extension in dev mode.
-* Load the extension as an unpacked extension from the `dist` folder.
-* Find the extension URL and then open `chrome-extension://<extension-id>/test/tests.html` in Chrome.
+- Build the extension in dev mode.
+- Load the extension as an unpacked extension from the `dist` folder.
+- Find the extension URL and then open `chrome-extension://<extension-id>/test/tests.html` in Chrome.
 
 ### Firefox
 
-* Build the extension in dev mode.
-* Open Firefox and navigate to `about:debugging`.
-* Click on **This Firefox** and then **Load Temporary Add-on**.
-  * You can either select the `manifest.json` file or the zipped extension.
-* Find the extension URL and then open `moz-extension://<extension-id>/test/tests.html` in Firefox.
+- Build the extension in dev mode.
+- Open Firefox and navigate to `about:debugging`.
+- Click on **This Firefox** and then **Load Temporary Add-on**.
+  - You can either select the `manifest.json` file or the zipped extension.
+- Find the extension URL and then open `moz-extension://<extension-id>/test/tests.html` in Firefox.
 
 ## :sparkles: Run Linter and Formatter
 
@@ -113,6 +138,7 @@ This project uses [Prettier](https://prettier.io/) to format the code.
 For more information why the linter and formatter are separate, see [this article about ESLint deprecating formatting rules](https://eslint.org/blog/2023/10/deprecating-formatting-rules/).
 
 To check the code for formatting issues without changing any files, use the `check` mode:
+
 ```bash
 $ MODE="check" ./bin/run_formatter.sh
 ```
