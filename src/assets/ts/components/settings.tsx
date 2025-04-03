@@ -13,6 +13,7 @@ export const Settings: React.FC = () => {
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const [companyName, setCompanyName] = useState<string>('');
   const [isViewLoading, setIsViewLoading] = useState<boolean>(false);
+  const [isCopyLoading, setIsCopyLoading] = useState<boolean>(false);
 
   const getCompanyData = async () => {
     setIsViewLoading(true);
@@ -38,6 +39,19 @@ export const Settings: React.FC = () => {
     setIsButtonLoading(true);
     dispatch(signOut());
     setIsButtonLoading(false);
+  };
+
+  const handleCopyText = async () => {
+    setIsCopyLoading(true);
+    try {
+      const storage = await browser.storage.sync.get();
+      const jsonString = JSON.stringify(storage, null, 2);
+      await navigator.clipboard.writeText(jsonString);
+    } catch (error) {
+      console.error('Failed to copy storage state:', error);
+    } finally {
+      setIsCopyLoading(false);
+    }
   };
 
   if (isViewLoading) {
@@ -69,6 +83,22 @@ export const Settings: React.FC = () => {
               </p>
             )}
           </div>
+        </section>
+        <section className="mb-3">
+          <button
+            className="btn btn-secondary w-100"
+            onClick={handleCopyText}
+            disabled={isCopyLoading}
+          >
+            {isCopyLoading ? (
+              <>
+                <span className="spinner spinner-border spinner-border-sm me-2"></span>
+                Copying...
+              </>
+            ) : (
+              'Copy Storage State'
+            )}
+          </button>
         </section>
         <section>
           <button className="btn btn-primary w-100" onClick={handleSignOut}>
